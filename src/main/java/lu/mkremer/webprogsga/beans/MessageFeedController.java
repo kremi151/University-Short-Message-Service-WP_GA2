@@ -41,7 +41,7 @@ public class MessageFeedController implements Serializable{
 	public void loadFeed() {
 		messages.clear();
 		if(session.isLoggedIn()) {
-			messages.addAll(mm.loadMessages(session.getUser()));
+			messages.addAll(mm.loadMessagesFor(session.getUser()));
 		}
 	}
 

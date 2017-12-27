@@ -18,7 +18,7 @@ public class MessageManagerImpl implements MessageManager{
 	private EntityManager em;
 
 	@Override
-	public List<Tweed> loadMessages(User user) {
+	public List<Tweed> loadMessagesFor(User user) {
 		return em.createQuery("select msg from User u join u.subscriptions sub join sub.messages msg where u.username = :id", Tweed.class)
 				.setParameter("id", user.getUsername()).getResultList();
 	}
@@ -28,6 +28,12 @@ public class MessageManagerImpl implements MessageManager{
 		Tweed msg = new Tweed(name, content, sender, channel);
 		em.persist(msg);
 		return msg;
+	}
+
+	@Override
+	public List<Tweed> loadMessagesOf(User user) {//TODO: Restrict messages to the channels the viewer (other user) has subscribed?
+		return em.createQuery("select m from Tweed m where m.sender.username = :sender", Tweed.class)
+				.setParameter("sender", user.getUsername()).getResultList();
 	}
 
 }

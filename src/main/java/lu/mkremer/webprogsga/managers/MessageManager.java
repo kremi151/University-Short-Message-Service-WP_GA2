@@ -10,8 +10,9 @@ import lu.mkremer.webprogsga.persistence.User;
 
 @Local
 public interface MessageManager {
-	
-	List<Tweed> loadMessages(User user);
+
+	List<Tweed> loadMessagesFor(User user);
+	List<Tweed> loadMessagesOf(User user);
 	Tweed postMessage(String name, String content, User sender, Channel channel);
 	
 }

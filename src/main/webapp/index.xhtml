@@ -20,6 +20,7 @@
 			<ui:repeat var="msg" value="#{msgfeed.messages}">
 				<mk:tweed value="#{msg}" />
 			</ui:repeat>
+			<b:alert severity="info" rendered="#{msgfeed.messages.size() == 0}">No messages found. Make sure you have subscribed to at least one channel!</b:alert>
 		</b:container>
     </h:body>
 </html>
