@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html 
+   xmlns="http://www.w3.org/1999/xhtml" 
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:b="http://bootsfaces.net/ui"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:c="http://java.sun.com/jsp/jstl/core"
+   xmlns:ui="http://java.sun.com/jsf/facelets" >
+    <h:head>
+        <title>#{vuser.user.firstName} #{vuser.user.lastName}</title>
+        <meta charset="utf-8"/>
+    </h:head>
+    <h:body>
+	    <ui:insert name="navbar" >
+			<ui:include src="navbar.xhtml" />
+		</ui:insert> 
+		<b:container style="margin-top:70px">
+		    <h1>#{vuser.user.firstName} #{vuser.user.lastName} (#{vuser.user.username}) <b:button value="Back" onclick="history.go(-1)" iconAwesome="fa-angle-left" /></h1>
+			<b:messages />
+			<b:panelGrid colSpans="4,8" size="xs">
+				<h:outputLabel value="First name:" />
+				<h:outputLabel id="firstNameLabel" value="#{vuser.user.firstName}" />
+				<h:outputLabel value="Last name:" />
+				<h:outputLabel id="lastNameLabel" value="#{vuser.user.lastName}" />
+				<h:outputLabel value="Username:" />
+				<h:outputLabel id="usernameLabel" value="#{vuser.user.username}" />
+				<h:outputLabel value="E-mail address:" />
+				<h:outputLabel id="emailLabel" value="#{vuser.user.email}" />
+			</b:panelGrid>
+		</b:container>
+    </h:body>
+</html>
