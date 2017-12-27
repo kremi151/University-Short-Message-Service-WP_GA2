@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:body>
+		<ui:composition>
+			<b:jumbotron style="background:#F8F8F8;margin-bottom:16px;padding:16px 24px;font-size:12px;">
+				<p style="font-size:2em;">#{value.name}</p>
+				<p>#{value.content}</p>
+				<p style="color:#6F6F6F;">#{value.sender.firstName} #{value.sender.lastName} (@#{value.sender.username}) - <i>#{value.date}</i></p>
+			</b:jumbotron>
+		</ui:composition>
+	</h:body>
+</html>

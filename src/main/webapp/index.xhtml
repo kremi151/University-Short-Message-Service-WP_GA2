@@ -5,7 +5,8 @@
    xmlns:b="http://bootsfaces.net/ui"
    xmlns:f="http://java.sun.com/jsf/core"
    xmlns:c="http://java.sun.com/jsp/jstl/core"
-   xmlns:ui="http://java.sun.com/jsf/facelets" >
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:mk="http://mkremer.lu/facelets" >
     <h:head>
         <title>Start Page</title>
         <meta charset="utf-8"/>
@@ -17,12 +18,7 @@
 		<b:container style="margin-top:70px">
 			<b:alert severity="danger">(TODO) Users which are not logged in should not see this page</b:alert>
 			<ui:repeat var="msg" value="#{msgfeed.messages}">
-				<b:well>
-					<h1>#{msg.name}</h1>
-					<p>By #{msg.sender.username}</p>
-					<p>#{msg.content}</p>
-					<p>#{msg.date}</p>
-				</b:well>
+				<mk:tweed value="#{msg}" />
 			</ui:repeat>
 		</b:container>
     </h:body>
