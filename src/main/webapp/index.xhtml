@@ -16,11 +16,16 @@
 			<ui:include src="navbar.xhtml" />
 		</ui:insert> 
 		<b:container style="margin-top:70px">
-			<b:alert severity="danger">(TODO) Users which are not logged in should not see this page</b:alert>
-			<ui:repeat var="msg" value="#{msgfeed.messages}">
-				<mk:tweed value="#{msg}" />
-			</ui:repeat>
-			<b:alert severity="info" rendered="#{msgfeed.messages.size() == 0}">No messages found. Make sure you have subscribed to at least one channel!</b:alert>
+			<ui:fragment rendered="#{usession.loggedIn}">
+				<h1>Message feed</h1>
+				<ui:repeat var="msg" value="#{msgfeed.messages}">
+					<mk:tweed value="#{msg}" />
+				</ui:repeat>
+				<b:alert severity="info" rendered="#{msgfeed.messages.size() == 0}">No messages found. Make sure you have subscribed to at least one channel!</b:alert>
+			</ui:fragment>
+			<ui:fragment rendered="#{not usession.loggedIn}">
+				<mk:login />
+			</ui:fragment>
 		</b:container>
     </h:body>
 </html>

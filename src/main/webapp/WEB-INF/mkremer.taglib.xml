@@ -5,7 +5,11 @@
 <facelet-taglib>
     <namespace>http://mkremer.lu/facelets</namespace>
     <tag>
-	<tag-name>tweed</tag-name>
-	<source>tags/lu/mkremer/webprogsga/tweed.xhtml</source>
+		<tag-name>tweed</tag-name>
+		<source>tags/lu/mkremer/webprogsga/tweed.xhtml</source>
+    </tag>
+    <tag>
+		<tag-name>login</tag-name>
+		<source>tags/lu/mkremer/webprogsga/login.xhtml</source>
     </tag>
 </facelet-taglib>
