@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -35,9 +37,12 @@ public class Channel{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date creationDate = Calendar.getInstance().getTime();
 	
-	
+
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy="subscriptions")
 	private List<User> subscribers;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="channel")
+	private List<Tweed> messages;
 	
 	public Channel() {}
 	

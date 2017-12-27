@@ -15,11 +15,15 @@
 			<ui:include src="navbar.xhtml" />
 		</ui:insert> 
 		<b:container style="margin-top:70px">
-			<b:jumbotron>
-		        <center><h1>Hello!</h1>
-		        <h2>This page is currently under construction</h2>
-		        <h3>You visited this page at #{test.getTimeStamp()}</h3></center>
-	        </b:jumbotron>
+			<b:alert severity="danger">(TODO) Users which are not logged in should not see this page</b:alert>
+			<ui:repeat var="msg" value="#{msgfeed.messages}">
+				<b:well>
+					<h1>#{msg.name}</h1>
+					<p>By #{msg.sender.username}</p>
+					<p>#{msg.content}</p>
+					<p>#{msg.date}</p>
+				</b:well>
+			</ui:repeat>
 		</b:container>
     </h:body>
 </html>

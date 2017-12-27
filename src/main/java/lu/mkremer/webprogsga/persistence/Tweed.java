@@ -30,6 +30,18 @@ public class Tweed {
 	
 	@ManyToOne(optional=false)
 	private User sender;
+	
+	@ManyToOne(optional=false)
+	private Channel channel;
+	
+	public Tweed() {}
+	
+	public Tweed(String name, String content, User sender, Channel channel) {
+		this.name = name;
+		this.content = content;
+		this.sender = sender;
+		this.channel = channel;
+	}
 
 	public String getName() {
 		return name;
@@ -65,5 +77,13 @@ public class Tweed {
 
 	public long getId() {
 		return id;
+	}
+
+	public Channel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(Channel channel) {
+		this.channel = channel;
 	}
 }
