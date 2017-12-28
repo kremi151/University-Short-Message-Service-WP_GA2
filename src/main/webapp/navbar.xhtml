@@ -1,31 +1,56 @@
-<h:form xmlns="http://www.w3.org/1999/xhtml"
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:h="http://java.sun.com/jsf/html">
-	<b:navBar brand="UL Short Messages (Name to be changed)" brandHref="index.xhtml" fixed="top" sticky="true">
-		
-
-		<b:navbarLinks pull="right" rendered="#{not usession.loggedIn}">
-			<b:navLink value="Sign in" href="login.xhtml"
-				iconAwesome="fa-sign-in"></b:navLink>
-			<b:navLink value="Create account" href="register.xhtml"
-				iconAwesome="fa-user-plus"></b:navLink>
-		</b:navbarLinks>
-
-		<b:navbarLinks pull="right" styleClass="hidden-xs"
-			rendered="#{usession.loggedIn}">
-
-			<b:dropMenu value="#{usession.displayName}" iconAwesome="fa-user">
-				<b:navLink value="Profile" outcome="user.xhtml"
-					iconAwesome="fa-cogs">
-					<f:param name="id" value="#{usession.user.username}" />
-				</b:navLink>
-				<b:navLink></b:navLink>
-				<b:navLink header="Session"></b:navLink>
-				<b:navCommandLink value="Log out" action="#{usession.logout}"
-					iconAwesome="fa-sign-out"></b:navCommandLink>
-			</b:dropMenu>
-		</b:navbarLinks>
-	</b:navBar>
-</h:form>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<h:form>
+		<b:navBar brand="UL Short Messages (Name to be changed)" brandHref="index.xhtml" fixed="top" sticky="true">
+			<b:navbarLinks pull="right" rendered="#{not usession.loggedIn}">
+				<b:navLink value="Sign in" href="login.xhtml"
+					iconAwesome="fa-sign-in"></b:navLink>
+				<b:navLink value="Create account" href="register.xhtml"
+					iconAwesome="fa-user-plus"></b:navLink>
+			</b:navbarLinks>
+	
+			<b:navbarLinks pull="right" styleClass="hidden-xs"
+				rendered="#{usession.loggedIn}">
+				
+				<b:navLink value="New tweed" icon-awesome="fa-pencil" href="#" onclick="$('.newTweedModal').modal();" rendered="#{usession.loggedIn}"></b:navLink>
+				<b:dropMenu value="#{usession.displayName}" iconAwesome="fa-user">
+					<b:navLink value="Profile" outcome="user.xhtml"
+						iconAwesome="fa-cogs">
+						<f:param name="id" value="#{usession.user.username}" />
+					</b:navLink>
+					<b:navLink></b:navLink>
+					<b:navLink header="Session"></b:navLink>
+					<b:navCommandLink value="Log out" action="#{usession.logout}"
+						iconAwesome="fa-sign-out"></b:navCommandLink>
+				</b:dropMenu>
+			</b:navbarLinks>
+		</b:navBar>
+	</h:form>
+	
+	<b:form rendered="#{usession.loggedIn}">
+		<b:modal class="newTweedModal" title="New tweed">
+			<b:inputText value="#{newtweed.title}" placeholder="Message title">
+				<f:facet name="prepend">
+					<h:outputText value="#" />
+				</f:facet>
+			</b:inputText>
+			<b:message for="@previous" />
+			<b:inputTextarea value="#{newtweed.message}" placeholder="Your message..." maxlength="200"/>
+			<b:message for="@previous" />
+			<b:selectOneMenu value="#{newtweed.channel}" required="true" label="Destination channel:">
+	            <f:selectItem itemLabel="(Please select)" itemValue="" />
+	            <f:selectItems value="#{newtweed.channels}" var="channel" itemValue="#{channel}" itemLabel="#{channel.name}" />
+	        </b:selectOneMenu>
+			<b:message for="@previous" />
+			<f:facet name="footer">
+		        <b:button value="Cancel" dismiss="modal" />
+		        <b:commandButton value="Post" look="primary" action="#{newtweed.post}" /><!--  ajax="true" update="@form"  For whatever reason in the world, I cannot get AJAX working... -->
+		    </f:facet>
+		</b:modal>
+	</b:form>
+</ui:fragment>

@@ -18,7 +18,7 @@ import lu.mkremer.webprogsga.persistence.User;
 
 @ManagedBean(name="vuser")
 @ViewScoped
-public class ViewUserController implements Serializable{
+public class ViewUserController implements Serializable{//TODO: Check for unknown user
 	
 	/**
 	 * 
