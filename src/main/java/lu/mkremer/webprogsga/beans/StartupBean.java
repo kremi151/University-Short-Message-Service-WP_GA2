@@ -69,6 +69,7 @@ public class StartupBean {//TODO: Run it with some default values before submiss
 
 			mm.postMessage("#TestA", "This message is only viewable for channel 1 subscribers", userAdmin, channel1);//TODO: Test
 			mm.postMessage("#TestB", "This message is only viewable for channel 2 subscribers", userAdmin, channel2);//TODO: Test
+			mm.postMessage("#TestC", "This message mentions the users @admin and @user, aswell as the message #TestA. Have a nice day.", userAdmin, channel2);//TODO: Test
 
 			System.out.println("### Executing tests ###");//TODO: Remove?
 			

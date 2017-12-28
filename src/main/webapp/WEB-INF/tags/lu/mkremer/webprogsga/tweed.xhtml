@@ -9,7 +9,7 @@
 		<ui:composition>
 			<b:jumbotron style="background:#F8F8F8;margin-bottom:16px;padding:16px 24px;">
 				<p style="font-size:20px;">#{value.name}</p>
-				<p style="font-size:14px;">#{value.content}</p>
+				<p style="font-size:14px;"><h:outputText value="#{value.formattedContent}" escape="false" /></p>
 				<p style="font-size:12px;">Posted to #{value.channel.name}</p>
 				<p style="font-size:12px;color:#6F6F6F;">
 					<h:outputText value="#{value.sender.firstName} #{value.sender.lastName} (" />
