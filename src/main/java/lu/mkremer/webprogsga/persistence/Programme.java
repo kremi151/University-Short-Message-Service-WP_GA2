@@ -19,6 +19,9 @@ public class Programme {//TODO: Complete
 	
 	@Column(nullable=false)
 	private String name;
+	
+	@Column(nullable=false)
+	private String description;
 
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="programme")
@@ -26,8 +29,9 @@ public class Programme {//TODO: Complete
 	
 	public Programme() {}
 	
-	public Programme(String name) {
+	public Programme(String name, String description) {
 		this.name = name;
+		this.description = description;
 	}
 
 
@@ -41,6 +45,22 @@ public class Programme {//TODO: Complete
 
 	public long getId() {
 		return id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setClasses(List<Class> classes) {
+		this.classes = classes;
+	}
+
+	public List<Class> getClasses() {
+		return classes;
 	}
 	
 }

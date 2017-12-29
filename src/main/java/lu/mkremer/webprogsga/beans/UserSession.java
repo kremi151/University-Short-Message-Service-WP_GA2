@@ -90,4 +90,8 @@ public class UserSession implements Serializable{
 		return user != null;
 	}
 	
+	public boolean isElevated() {
+		return user != null && user.isPriviledged();
+	}
+	
 }

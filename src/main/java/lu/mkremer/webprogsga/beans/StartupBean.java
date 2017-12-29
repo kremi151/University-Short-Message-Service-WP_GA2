@@ -44,7 +44,7 @@ public class StartupBean {//TODO: Run it with some default values before submiss
 
 			System.out.println("### Creating programmes ###");
 			
-			Programme prog1 = clm.createProgramme("Programme 1");//TODO: Test
+			Programme prog1 = clm.createProgramme("Programme 1", "Programme for testing purposes");//TODO: Test
 
 			System.out.println("### Creating classes ###");
 			

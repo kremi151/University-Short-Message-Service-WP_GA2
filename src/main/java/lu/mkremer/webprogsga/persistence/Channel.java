@@ -30,7 +30,7 @@ public class Channel{
 	@ManyToOne(optional=false)
 	private User creator;
 	
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany(fetch=FetchType.EAGER)//Don't touch!!
 	private List<Class> classes = new ArrayList<>();
 	
 	@Column(nullable=false)

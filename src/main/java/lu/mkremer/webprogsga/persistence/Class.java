@@ -1,9 +1,14 @@
 package lu.mkremer.webprogsga.persistence;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -21,6 +26,10 @@ public class Class {
 
 	@ManyToOne(optional = false)
 	private User lecturer;
+	
+	
+	@ManyToMany(cascade=CascadeType.REMOVE, fetch=FetchType.LAZY, mappedBy="classes")
+	private List<Channel> channels;
 	
 	public Class() {}
 	
@@ -57,5 +66,21 @@ public class Class {
 
 	public void setLecturer(User lecturer) {
 		this.lecturer = lecturer;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == this) {
+			return true;
+		}else if(obj == null || obj.getClass() != Class.class) {
+			return false;
+		}else {
+			return ((Class)obj).id == this.id;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return (int)(id * 31);
 	}
 }
