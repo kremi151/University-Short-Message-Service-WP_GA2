@@ -75,7 +75,7 @@ public class Tweed {
 				if(mention.startsWith("@")) {
 					output.append("<a href=\"user.xhtml?id=" + URLEncoder.encode(mention.substring(1), "UTF-8") + "\">" + mention + "</a>");
 				}else if(mention.startsWith("#")) {
-					output.append("<strong>" + mention + "</strong>");//TODO: Redirect to tweed
+					output.append("<a href=\"thread.xhtml?id=" + URLEncoder.encode(mention, "UTF-8") + "\">" + mention + "</a>");
 				}else {
 					output.append(mention);
 				}
