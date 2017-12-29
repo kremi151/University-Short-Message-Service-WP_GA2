@@ -19,7 +19,7 @@ public class MessageManagerImpl implements MessageManager{
 
 	@Override
 	public List<Tweed> loadMessagesFor(User user) {
-		return em.createQuery("select msg from User u join u.subscriptions sub join sub.messages msg where u.username = :id", Tweed.class)
+		return em.createQuery("select msg from User u join u.subscriptions sub join sub.messages msg where u.username = :id order by msg.date desc", Tweed.class)
 				.setParameter("id", user.getUsername()).getResultList();
 	}
 
@@ -32,7 +32,7 @@ public class MessageManagerImpl implements MessageManager{
 
 	@Override
 	public List<Tweed> loadMessagesOf(User user) {//TODO: Restrict messages to the channels the viewer (other user) has subscribed?
-		return em.createQuery("select m from Tweed m where m.sender.username = :sender", Tweed.class)
+		return em.createQuery("select m from Tweed m where m.sender.username = :sender order by m.date desc", Tweed.class)
 				.setParameter("sender", user.getUsername()).getResultList();
 	}
 
