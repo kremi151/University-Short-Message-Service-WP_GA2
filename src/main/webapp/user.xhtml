@@ -16,8 +16,8 @@
 			<ui:include src="navbar.xhtml" />
 		</ui:insert> 
 		<b:container style="margin-top:70px">
-		    <ui:fragment rendered="#{usession.loggedIn}">
-		    	<h1>#{vuser.user.firstName} #{vuser.user.lastName} (#{vuser.user.username}) <b:button value="Back" onclick="history.go(-1)" iconAwesome="fa-angle-left" /></h1>
+			<mk:restricted condition="#{usession.loggedIn}">
+				<h1>#{vuser.user.firstName} #{vuser.user.lastName} (#{vuser.user.username}) <b:button value="Back" onclick="history.go(-1)" iconAwesome="fa-angle-left" /></h1>
 				<b:messages />
 				<b:accordion expanded-panels="profile">
 					<b:panel id="profile" title="Profile">
@@ -39,8 +39,7 @@
 						<b:alert severity="info" rendered="#{vuser.messages.size() == 0}">This user has not sent any message</b:alert>
 					</b:panel>
 				</b:accordion>
-		    </ui:fragment>
-		    <b:alert severity="danger" rendered="#{not usession.loggedIn}">Permission denied</b:alert>
+			</mk:restricted>
 		</b:container>
     </h:body>
 </html>
