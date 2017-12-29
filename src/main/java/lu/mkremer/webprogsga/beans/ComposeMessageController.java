@@ -27,7 +27,7 @@ public class ComposeMessageController implements Serializable{
 	
 	@NotNull(message="No title provided")
 	@Size(min=2, message="Title must have at least {min} characters")
-	@Pattern(regexp="^[a-zA-Z0-9\\-\\_]+$", message="Tweed name must only contain letters, numbers, hiphens and/or underscores")
+	@Pattern(regexp="^[a-zA-Z0-9\\-\\_\\s]+$", message="Tweed name must only contain letters, numbers, hiphens and/or underscores. Whitespaces will be converted to underscores.")
 	private String title;
 	
 	@NotNull(message="No message provided")
@@ -81,6 +81,7 @@ public class ComposeMessageController implements Serializable{
 	
 	public String post() {
 		if(session.isLoggedIn()) {
+			title = title.replace(' ', '_');
 			mm.postMessage("#"+title, message, session.getUser(), channel);
 		}
 		return "index.xhtml";

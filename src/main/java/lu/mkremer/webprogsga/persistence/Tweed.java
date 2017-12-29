@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -18,14 +17,9 @@ import javax.validation.constraints.Pattern;
 @Entity
 public class Tweed {
 
-	//private static final String MENTION_USER_PATTERN = "\\@[a-zA-Z0-9\\-\\_]+";
-	//private static final String MENTION_TWEED_PATTERN = "\\#[a-zA-Z0-9\\-\\_]+";
 	private static final java.util.regex.Pattern MENTION_PATTERN = java.util.regex.Pattern.compile("[\\@|\\#][a-zA-Z0-9\\-\\_]+");
 
 	@Id
-	@GeneratedValue
-	private long id;
-	
 	@Column(nullable=false)
 	@Pattern(regexp="^#[a-zA-Z0-9\\-\\_]+$", message="Tweed name must only contain letters, numbers, hiphens and/or underscores")
 	private String name;//TODO: The new primary key?
@@ -115,10 +109,6 @@ public class Tweed {
 
 	public void setSender(User sender) {
 		this.sender = sender;
-	}
-
-	public long getId() {
-		return id;
 	}
 
 	public Channel getChannel() {
