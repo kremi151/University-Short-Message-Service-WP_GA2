@@ -84,4 +84,17 @@ public class ClassManagerImpl implements ClassManager{
 		}
 	}
 
+	@Override
+	public Class findClass(long id, boolean fetchChannels) {
+		if(fetchChannels) {
+			try {
+				return em.createQuery("select c from Class c left join fetch c.channels where c.id = :id", Class.class).setParameter("id", id).getSingleResult();
+			}catch(NoResultException e) {
+				return null;
+			}
+		}else {
+			return em.find(Class.class, id);
+		}
+	}
+
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html 
+   xmlns="http://www.w3.org/1999/xhtml" 
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:b="http://bootsfaces.net/ui"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:c="http://java.sun.com/jsp/jstl/core"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:mk="http://mkremer.lu/facelets" >
+    <h:head>
+        <title>Class</title>
+        <meta charset="utf-8"/>
+    </h:head>
+    <h:body>
+	    <ui:insert name="navbar" >
+			<ui:include src="navbar.xhtml" />
+		</ui:insert> 
+		<b:container style="margin-top:70px">
+			<mk:restricted condition="#{usession.loggedIn}">
+				<mk:restricted condition="#{param['id'] != null}" message="The requested class has not been found" severity="warning">
+					<script type="text/javascript">document.title = "#{viewclass.className}";</script>
+					<h1>#{viewclass.className}</h1>
+					<b:messages />
+					<p>Programme: <strong>#{viewclass.programme.name}</strong></p>
+					<b:panel title="Channels" collapsible="false">
+						<b:dataTable value="#{viewclass.channels}" var="channel">
+							<b:dataTableColumn label="Name" value="#{channel.name}" />
+							<b:dataTableColumn label="Creator" value="#{channel.creator.fullName}" />
+							<b:dataTableColumn label="Creation" value="#{channel.creationDate}" />
+						</b:dataTable>
+					</b:panel>
+				</mk:restricted>
+			</mk:restricted>
+		</b:container>
+    </h:body>
+</html>

@@ -86,6 +86,10 @@ public class User implements Serializable{
 	public String getLastName() {
 		return lastName;
 	}
+	
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;

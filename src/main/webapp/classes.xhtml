@@ -59,6 +59,9 @@
 					<b:dataTableColumn label="Lecturer" value="#{clazz.lecturer.firstName} #{clazz.lecturer.lastName}" />
 					<b:dataTableColumn label="Programme" value="#{clazz.programme.name}" />
 					<b:dataTableColumn label="" orderable="false">
+						<b:button value="View" icon-awesome="fa-eye" outcome="class.xhtml">
+							<f:param name="id" value="#{clazz.id}" />
+						</b:button>
 						<b:button value="Remove" icon-awesome="fa-trash" onclick="removeClass(#{clazz.id}, '#{clazz.title}');" rendered="#{usession.elevated}" />
 					</b:dataTableColumn>
 				</b:dataTable>

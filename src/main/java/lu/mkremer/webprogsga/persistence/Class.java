@@ -68,6 +68,14 @@ public class Class {
 		this.lecturer = lecturer;
 	}
 	
+	public List<Channel> getChannels() {
+		return channels;
+	}
+
+	public void setChannels(List<Channel> channels) {
+		this.channels = channels;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if(obj == this) {
