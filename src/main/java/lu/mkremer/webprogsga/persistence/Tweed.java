@@ -22,7 +22,7 @@ public class Tweed {
 	@Id
 	@Column(nullable=false)
 	@Pattern(regexp="^#[a-zA-Z0-9\\-\\_]+$", message="Tweed name must only contain letters, numbers, hiphens and/or underscores")
-	private String name;//TODO: The new primary key?
+	private String name;
 	
 	@Column(nullable=false, length=200)
 	private String content;

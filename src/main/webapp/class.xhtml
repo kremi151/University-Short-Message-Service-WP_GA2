@@ -19,6 +19,20 @@
 			<mk:restricted condition="#{usession.loggedIn}">
 				<mk:restricted condition="#{param['id'] != null}" message="The requested class has not been found" severity="warning">
 					<script type="text/javascript">document.title = "#{viewclass.className}";</script>
+					
+					<b:form id="createChannelForm" rendered="#{usession.elevated}">
+						<b:modal class="createChannelModal" title="Create new channel">
+							<p>The new channel will be linked to the class <strong>#{viewclass.className}</strong>. You can link other classes to this channel later on.</p>
+							<b:inputText label="Name:" value="#{viewclass.channelName}" />
+							<f:facet name="footer">
+						        <b:button value="Cancel" dismiss="modal" />
+						        <b:commandButton value="Create" look="primary" action="#{viewclass.create}">
+						        	<f:param name="id" value="#{param['id']}" />
+						        </b:commandButton>
+						    </f:facet>
+						</b:modal>
+					</b:form>
+					
 					<h1>#{viewclass.className}</h1>
 					<b:messages />
 					<p>Programme: <strong>#{viewclass.programme.name}</strong></p>
@@ -33,6 +47,9 @@
 								</b:button>
 							</b:dataTableColumn>
 						</b:dataTable>
+						<f:facet name="footer">
+					        <b:button value="Create channel" onclick="$('.createChannelModal').modal();" icon-awesome="fa-plus" />
+					    </f:facet>
 					</b:panel>
 				</mk:restricted>
 			</mk:restricted>

@@ -9,7 +9,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import lu.mkremer.webprogsga.managers.ChannelManager;
 import lu.mkremer.webprogsga.managers.ClassManager;
 import lu.mkremer.webprogsga.persistence.Channel;
 import lu.mkremer.webprogsga.persistence.Class;
@@ -26,8 +29,13 @@ public class ClassController implements Serializable{
 	private static final long serialVersionUID = 3557111055682521191L;
 	
 	@EJB private ClassManager clm;
+	@EJB private ChannelManager cm;
 	
 	private Class clazz;
+	
+	@NotNull(message="No channel name provided")
+	@Size(min=5, message="Channel name must have at least {min} characters")
+	private String channelName;
 	
 	@ManagedProperty("#{usession}")
 	private UserSession session;
@@ -38,6 +46,10 @@ public class ClassController implements Serializable{
 
 	@PostConstruct
 	public void init() {
+		reload();
+	}
+	
+	public void reload() {
 		if(session.isLoggedIn()) {
 			String cid = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
 			if(cid != null) {
@@ -47,6 +59,8 @@ public class ClassController implements Serializable{
 					MessageHelper.throwWarningMessage("The requested class has not been found");
 				}
 			}
+		}else {
+			clazz = null;
 		}
 	}
 	
@@ -60,6 +74,21 @@ public class ClassController implements Serializable{
 	
 	public List<Channel> getChannels(){
 		return clazz.getChannels();
+	}
+	
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+
+	public void create() {
+		if(clazz != null && session.isElevated()) {
+			cm.createChannel(channelName, session.getUser(), channel -> channel.getClasses().add(clazz));
+			reload();
+		}
 	}
 	
 }
