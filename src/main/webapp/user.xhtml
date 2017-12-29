@@ -34,7 +34,7 @@
 					</b:panel>
 					<b:panel title="Messages">
 						<ui:repeat var="msg" value="#{vuser.messages}">
-							<mk:tweed value="#{msg}" />
+							<mk:tweed value="#{msg}" onreply="replyTweed('#{msg.name}');" outcome="thread.xhtml" param="id" />
 						</ui:repeat>
 						<b:alert severity="info" rendered="#{vuser.messages.size() == 0}">This user has not sent any message</b:alert>
 					</b:panel>

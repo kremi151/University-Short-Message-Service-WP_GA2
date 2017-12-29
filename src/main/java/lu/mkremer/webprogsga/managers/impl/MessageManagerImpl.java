@@ -41,4 +41,17 @@ public class MessageManagerImpl implements MessageManager{
 		return em.createQuery("select m from Tweed m where m.channel.id = :id order by m.date desc", Tweed.class).setParameter("id", channel.getId()).getResultList();
 	}
 
+	@Override
+	public Tweed findMessage(String id) {
+		if(!id.startsWith("#")) id = "#" + id;
+		return em.find(Tweed.class, id);
+	}
+
+	@Override
+	public List<Tweed> findAnswersFor(String id) {
+		if(!id.startsWith("#")) id = "#" + id;
+		return em.createQuery("select m from Tweed m where m.content like :name order by m.date asc", Tweed.class)
+				.setParameter("name", "%" + id + "%").getResultList();
+	}
+
 }

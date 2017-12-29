@@ -19,7 +19,7 @@
 			<ui:fragment rendered="#{usession.loggedIn}">
 				<h1><h:outputText value="Message feed" rendered="#{param['channel'] == null}" /><h:outputText value="#{msgfeed.channelName}" rendered="#{param['channel'] != null}" /></h1>
 				<ui:repeat var="msg" value="#{msgfeed.messages}">
-					<mk:tweed value="#{msg}" onreply="replyTweed('#{msg.name}');" />
+					<mk:tweed value="#{msg}" onreply="replyTweed('#{msg.name}');" outcome="thread.xhtml" param="id"/>
 				</ui:repeat>
 				<b:alert severity="info" rendered="#{msgfeed.messages.size() == 0}">No messages found. Make sure you have subscribed to at least one channel!</b:alert>
 			</ui:fragment>

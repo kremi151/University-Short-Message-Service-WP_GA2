@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html 
+   xmlns="http://www.w3.org/1999/xhtml" 
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:b="http://bootsfaces.net/ui"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:c="http://java.sun.com/jsp/jstl/core"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:mk="http://mkremer.lu/facelets" >
+    <h:head>
+        <title>Thread</title>
+        <meta charset="utf-8"/>
+    </h:head>
+    <h:body>
+	    <ui:insert name="navbar" >
+			<ui:include src="navbar.xhtml" />
+		</ui:insert> 
+		<b:container style="margin-top:70px">
+			<mk:restricted condition="#{usession.loggedIn}">
+				<mk:restricted condition="#{thread.mainTweed != null}" severity="warning" message="The requested tweed has not been found">
+					<h1>Thread for #{thread.mainTweed.name}</h1>
+					<mk:tweed value="#{thread.mainTweed}" look="primary" onreply="replyTweed('#{thread.mainTweed.name}');" collapsible="false" />
+					<ui:repeat var="answer" value="#{thread.answers}">
+						<mk:tweed value="#{answer}" onreply="replyTweed('#{answer.name}');" outcome="thread.xhtml" param="id"/>
+					</ui:repeat>
+				</mk:restricted>
+			</mk:restricted>
+		</b:container>
+    </h:body>
+</html>

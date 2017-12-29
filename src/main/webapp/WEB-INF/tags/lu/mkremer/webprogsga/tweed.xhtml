@@ -7,13 +7,16 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<h:body>
 		<ui:composition>
-			<b:panel look="info">
+			<b:panel look="#{(empty look) ? 'info' : look}" collapsible="#{(not empty collapsible) ? collapsible : true}">
 				<f:facet name="heading">
 					<h:outputText value="#{value.name}"/><b:label text="#{value.channel.name}" style="margin-left:1em;"/>
 				</f:facet>
 			    <h:outputText value="#{value.formattedContent}" escape="false" />
 			    <f:facet name="footer">
 			    	<b:button value="Reply" icon-awesome="fa-mail-reply" onclick="#{onreply}" rendered="#{not empty onreply}" style="margin-right:1em;" />
+			    	<b:button value="View" icon-awesome="fa-list" outcome="#{outcome}" rendered="#{(not empty outcome) and (not empty param)}" style="margin-right:1em;">
+			    		<f:param name="#{param}" value="#{value.name}" />
+			    	</b:button>
 			        <h:outputText value="#{value.sender.firstName} #{value.sender.lastName} (" />
 					<h:outputLink value="user.xhtml">
 						<f:param name="id" value="#{value.sender.username}" />
