@@ -13,6 +13,7 @@
 				</f:facet>
 			    <h:outputText value="#{value.formattedContent}" escape="false" />
 			    <f:facet name="footer">
+			    	<b:button value="Reply" icon-awesome="fa-mail-reply" onclick="#{onreply}" rendered="#{not empty onreply}" style="margin-right:1em;" />
 			        <h:outputText value="#{value.sender.firstName} #{value.sender.lastName} (" />
 					<h:outputLink value="user.xhtml">
 						<f:param name="id" value="#{value.sender.username}" />

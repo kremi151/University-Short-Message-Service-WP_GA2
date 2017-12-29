@@ -37,15 +37,15 @@
 		</b:navBar>
 	</h:form>
 	
-	<b:form rendered="#{usession.loggedIn}">
+	<b:form id="newTweedForm" rendered="#{usession.loggedIn}">
 		<b:modal class="newTweedModal" title="New tweed">
-			<b:inputText value="#{newtweed.title}" placeholder="Message title">
+			<b:inputText id="tweedTitle" value="#{newtweed.title}" placeholder="Message title">
 				<f:facet name="prepend">
 					<h:outputText value="#" />
 				</f:facet>
 			</b:inputText>
 			<b:message for="@previous" />
-			<b:inputTextarea value="#{newtweed.message}" placeholder="Your message..." maxlength="200"/>
+			<b:inputTextarea id="tweedContent" value="#{newtweed.message}" placeholder="Your message..." maxlength="200"/>
 			<b:message for="@previous" />
 			<b:selectOneMenu value="#{newtweed.channel}" required="true" label="Destination channel:">
 	            <f:selectItem itemLabel="(Please select)" itemValue="" />
@@ -57,5 +57,12 @@
 		        <b:commandButton value="Post" look="primary" action="#{newtweed.post}" /><!--  ajax="true" update="@form"  For whatever reason in the world, I cannot get AJAX working... -->
 		    </f:facet>
 		</b:modal>
+		<script type="text/javascript">
+			function replyTweed(name){
+				document.getElementById("input_newTweedForm:tweedTitle").value = " ";
+				document.getElementById("input_newTweedForm:tweedContent").value = name + " ";
+				$(".newTweedModal").modal();
+			}
+		</script>
 	</b:form>
 </ui:fragment>

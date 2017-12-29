@@ -28,10 +28,10 @@ public class Tweed {
 	
 	@Column(nullable=false)
 	@Pattern(regexp="^#[a-zA-Z0-9\\-\\_]+$", message="Tweed name must only contain letters, numbers, hiphens and/or underscores")
-	private String name;//TODO: Must start with '#'
+	private String name;//TODO: The new primary key?
 	
 	@Column(nullable=false, length=200)
-	private String content;//TODO: Max length -> 200
+	private String content;
 	
 	@Column(nullable=false)
 	@Temporal(TemporalType.TIMESTAMP)
