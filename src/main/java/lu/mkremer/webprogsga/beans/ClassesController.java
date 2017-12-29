@@ -59,7 +59,12 @@ public class ClassesController implements Serializable{
 			if(progFilter != null) {
 				try {
 					programme = clm.findProgramme(Long.parseLong(progFilter), true);
-					classes = programme.getClasses();
+					if(programme != null) {
+						classes = programme.getClasses();
+					}else {
+						classes = Collections.emptyList();
+						MessageHelper.throwWarningMessage("Could not fetch classes for the requested programme");
+					}
 				}catch(NumberFormatException e) {
 					MessageHelper.throwWarningMessage("Could not fetch classes for the requested programme");
 				}

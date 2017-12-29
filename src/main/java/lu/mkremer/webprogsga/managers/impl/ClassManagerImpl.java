@@ -40,7 +40,7 @@ public class ClassManagerImpl implements ClassManager{
 	@Override
 	public Programme deleteProgramme(long id) {
 		try {
-			Programme p = em.createQuery("select p from Programme p join fetch p.classes where p.id = :id", Programme.class).setParameter("id", id).getSingleResult();
+			Programme p = em.createQuery("select p from Programme p left join fetch p.classes where p.id = :id", Programme.class).setParameter("id", id).getSingleResult();
 			em.remove(p);//TODO: Fix cascading deletion bug
 			return p;
 		}catch(NoResultException e) {
@@ -64,7 +64,7 @@ public class ClassManagerImpl implements ClassManager{
 	public Programme findProgramme(long id, boolean fetchClasses) {
 		if(fetchClasses) {
 			try {
-				return em.createQuery("select p from Programme p join fetch p.classes where p.id = :id", Programme.class).setParameter("id", id).getSingleResult();
+				return em.createQuery("select p from Programme p left join fetch p.classes where p.id = :id", Programme.class).setParameter("id", id).getSingleResult();
 			}catch(NoResultException e) {
 				return null;
 			}
@@ -76,7 +76,7 @@ public class ClassManagerImpl implements ClassManager{
 	@Override
 	public Class deleteClass(long id) {
 		try {
-			Class c = em.createQuery("select c from Class c join fetch c.channels where c.id = :id", Class.class).setParameter("id", id).getSingleResult();
+			Class c = em.createQuery("select c from Class c where c.id = :id", Class.class).setParameter("id", id).getSingleResult();
 			em.remove(c);//TODO: Fix cascading deletion bug
 			return c;
 		}catch(NoResultException e) {
