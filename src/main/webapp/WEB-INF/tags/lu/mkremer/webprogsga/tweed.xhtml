@@ -7,20 +7,20 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<h:body>
 		<ui:composition>
-			<b:jumbotron style="background:#F8F8F8;margin-bottom:16px;padding:16px 24px;">
-				<p style="font-size:20px;">#{value.name}</p>
-				<p style="font-size:14px;"><h:outputText value="#{value.formattedContent}" escape="false" /></p>
-				<p style="font-size:12px;">Posted to #{value.channel.name}</p>
-				<p style="font-size:12px;color:#6F6F6F;">
-					<h:outputText value="#{value.sender.firstName} #{value.sender.lastName} (" />
+			<b:panel look="info">
+				<f:facet name="heading">
+					<h:outputText value="#{value.name}"/><b:label text="#{value.channel.name}" style="margin-left:1em;"/>
+				</f:facet>
+			    <h:outputText value="#{value.formattedContent}" escape="false" />
+			    <f:facet name="footer">
+			        <h:outputText value="#{value.sender.firstName} #{value.sender.lastName} (" />
 					<h:outputLink value="user.xhtml">
 						<f:param name="id" value="#{value.sender.username}" />
 						<h:outputText value="@#{value.sender.username}" />
 					</h:outputLink>
-					<h:outputText value=") - " />
-					<i>#{value.date}</i>
-				</p>
-			</b:jumbotron>
+					<h:outputText value=") - &lt;i&gt;#{value.date}&lt;/i&gt;" escape="false" />
+			    </f:facet>
+			</b:panel>
 		</ui:composition>
 	</h:body>
 </html>
