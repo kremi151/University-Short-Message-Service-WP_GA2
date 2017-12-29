@@ -12,8 +12,11 @@ public interface ClassManager {
 
 	Programme createProgramme(String name, String description);
 	Programme deleteProgramme(long id);
+	Programme findProgramme(long id, boolean fetchClasses);
 	lu.mkremer.webprogsga.persistence.Class createClass(String title, Programme programme, User lecturer);
+	lu.mkremer.webprogsga.persistence.Class deleteClass(long id);
 	List<Programme> getAllProgrammes();
 	List<lu.mkremer.webprogsga.persistence.Class> getProgrammeClasses(Programme p);
+	List<lu.mkremer.webprogsga.persistence.Class> getAllClasses();
 	
 }

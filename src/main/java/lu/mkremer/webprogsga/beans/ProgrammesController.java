@@ -73,6 +73,7 @@ public class ProgrammesController implements Serializable{
 	public void create() {
 		if(session.isElevated()) {
 			clm.createProgramme(title, description);
+			MessageHelper.throwInfoMessage("Programme \"" + title + "\" has been created");
 			title = null;
 			description = null;
 		}else {

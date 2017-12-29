@@ -52,6 +52,9 @@
 					<b:dataTableColumn label="Name" value="#{prog.name}" />
 					<b:dataTableColumn label="Description" value="#{prog.description}" />
 					<b:dataTableColumn label="" orderable="false">
+						<b:button value="Class" icon-awesome="fa-book" outcome="classes.xhtml">
+							<f:param name="prog" value="#{prog.id}" />
+						</b:button>
 						<b:button value="Remove" icon-awesome="fa-trash" onclick="removeProgramme(#{prog.id}, '#{prog.name}');" rendered="#{usession.elevated}" />
 					</b:dataTableColumn>
 				</b:dataTable>
