@@ -17,7 +17,7 @@
 		</ui:insert> 
 		<b:container style="margin-top:70px">
 			<ui:fragment rendered="#{usession.loggedIn}">
-				<h1>Message feed</h1>
+				<h1><h:outputText value="Message feed" rendered="#{param['channel'] == null}" /><h:outputText value="#{msgfeed.channelName}" rendered="#{param['channel'] != null}" /></h1>
 				<ui:repeat var="msg" value="#{msgfeed.messages}">
 					<mk:tweed value="#{msg}" onreply="replyTweed('#{msg.name}');" />
 				</ui:repeat>

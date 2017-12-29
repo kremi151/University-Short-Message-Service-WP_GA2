@@ -13,6 +13,7 @@ public interface MessageManager {
 
 	List<Tweed> loadMessagesFor(User user);
 	List<Tweed> loadMessagesOf(User user);
+	List<Tweed> loadMessagesFrom(Channel channel);
 	Tweed postMessage(String name, String content, User sender, Channel channel);
 	
 }

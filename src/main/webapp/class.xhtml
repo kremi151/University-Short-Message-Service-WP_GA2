@@ -27,6 +27,11 @@
 							<b:dataTableColumn label="Name" value="#{channel.name}" />
 							<b:dataTableColumn label="Creator" value="#{channel.creator.fullName}" />
 							<b:dataTableColumn label="Creation" value="#{channel.creationDate}" />
+							<b:dataTableColumn label="" orderable="false">
+								<b:button value="View messages" icon-awesome="fa-envelope-o" outcome="index.xhtml">
+									<f:param name="channel" value="#{channel.id}" />
+								</b:button>
+							</b:dataTableColumn>
 						</b:dataTable>
 					</b:panel>
 				</mk:restricted>

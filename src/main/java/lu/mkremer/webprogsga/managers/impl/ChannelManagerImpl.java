@@ -69,4 +69,9 @@ public class ChannelManagerImpl implements ChannelManager{
 		return em.createQuery("select sub from User u join u.subscriptions sub where u.username = :id", Channel.class)
 				.setParameter("id", user.getUsername()).getResultList();
 	}
+
+	@Override
+	public Channel findChannel(long id) {
+		return em.find(Channel.class, id);
+	}
 }

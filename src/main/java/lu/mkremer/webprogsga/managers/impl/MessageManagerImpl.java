@@ -36,4 +36,9 @@ public class MessageManagerImpl implements MessageManager{
 				.setParameter("sender", user.getUsername()).getResultList();
 	}
 
+	@Override
+	public List<Tweed> loadMessagesFrom(Channel channel) {
+		return em.createQuery("select m from Tweed m where m.channel.id = :id order by m.date desc", Tweed.class).setParameter("id", channel.getId()).getResultList();
+	}
+
 }

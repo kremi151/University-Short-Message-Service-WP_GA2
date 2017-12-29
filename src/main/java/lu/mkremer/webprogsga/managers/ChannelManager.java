@@ -16,6 +16,7 @@ public interface ChannelManager {
 	void unsubscribe(User user, Channel channel);
 	Channel createChannel(String name, User creator, Consumer<Channel> prePersistCallback);
 	List<Channel> getChannelSubscriptions(User user);
+	Channel findChannel(long id);
 	
 	default Channel createChannel(String name, User creator) {
 		return createChannel(name, creator, null);
