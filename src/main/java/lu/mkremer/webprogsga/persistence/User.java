@@ -39,6 +39,9 @@ public class User implements Serializable{
 	@Column(nullable=false)
 	private boolean priviledged = false;
 	
+	@Column(nullable=false)
+	private boolean enabled = true;//TODO: Enable/Disable via UI
+	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(
 		      name="ChannelSubscribers",
@@ -107,6 +110,22 @@ public class User implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public List<Channel> getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(List<Channel> subscriptions) {
+		this.subscriptions = subscriptions;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	@Override
 	public boolean equals(Object other) {
@@ -115,14 +134,6 @@ public class User implements Serializable{
 		}else {
 			return other == this || ((User)other).username.equals(this.username);
 		}
-	}
-	
-	public List<Channel> getSubscriptions() {
-		return subscriptions;
-	}
-
-	public void setSubscriptions(List<Channel> subscriptions) {
-		this.subscriptions = subscriptions;
 	}
 
 	@Override

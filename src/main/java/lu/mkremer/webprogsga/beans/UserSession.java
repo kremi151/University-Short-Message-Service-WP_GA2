@@ -38,7 +38,11 @@ public class UserSession implements Serializable{
 			if(BCrypt.checkpw(password, user.getPassword())) {
 				username = null;
 				password = null;
-				this.user = user;
+				if(user.isEnabled()) {
+					this.user = user;
+				}else {
+					MessageHelper.throwDangerMessage("Your account has been disabled. Please contact a responsible staff member if you think this is an error.");
+				}
 				return "index";
 			}else {
 				MessageHelper.throwDangerMessage("Invalid username or password");

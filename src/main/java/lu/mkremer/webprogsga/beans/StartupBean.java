@@ -41,14 +41,21 @@ public class StartupBean {//TODO: Run it with some default values before submiss
 			
 			User userAdmin = um.createUser("admin", "admin@admin.admin", "Admin", "Istrator", BCrypt.hashpw("adminadmin", BCrypt.gensalt()), true);
 			User userUser = um.createUser("user", "user@email.com", "Some", "User", BCrypt.hashpw("test", BCrypt.gensalt()), false);
+			User userBlocked = um.createUser("blocked", "block@me.com", "Iam", "Blocked", BCrypt.hashpw("blocked", BCrypt.gensalt()), false);
+			userBlocked.setEnabled(false);
+			um.update(userBlocked);
 
 			System.out.println("### Creating programmes ###");
-			
-			Programme prog1 = clm.createProgramme("Programme 1", "Programme for testing purposes");//TODO: Test
+
+			Programme prog1 = clm.createProgramme("Study programme A", "Description for study programme A");
+			Programme prog2 = clm.createProgramme("Study programme B", "Description for study programme B");
 
 			System.out.println("### Creating classes ###");
-			
-			Class class1 = clm.createClass("Class 1", prog1, userAdmin);//TODO: Test
+
+			Class class1 = clm.createClass("Class A.1", prog1, userAdmin);
+			Class class2 = clm.createClass("Class A.2", prog1, userAdmin);
+			Class class3 = clm.createClass("Class B.1", prog2, userAdmin);
+			Class class4 = clm.createClass("Class B.2", prog2, userAdmin);
 
 			System.out.println("### Creating channels ###");
 			
@@ -67,9 +74,9 @@ public class StartupBean {//TODO: Run it with some default values before submiss
 
 			System.out.println("### Creating messages ###");
 
-			mm.postMessage("#TestA", "This message is only viewable for channel 1 subscribers", userAdmin, channel1);//TODO: Test
-			mm.postMessage("#TestB", "This message is only viewable for channel 2 subscribers", userAdmin, channel2);//TODO: Test
-			mm.postMessage("#TestC", "This message mentions the users @admin and @user, aswell as the message #TestA. Have a nice day.", userAdmin, channel2);//TODO: Test
+			mm.postMessage("#TestA", "This message is only viewable for channel 1 subscribers", userAdmin, channel1);
+			mm.postMessage("#TestB", "This message is only viewable for channel 2 subscribers", userAdmin, channel2);
+			mm.postMessage("#TestC", "This message mentions the users @admin and @user, aswell as the message #TestA. Have a nice day.", userAdmin, channel2);
 
 			System.out.println("### Executing tests ###");//TODO: Remove?
 			
