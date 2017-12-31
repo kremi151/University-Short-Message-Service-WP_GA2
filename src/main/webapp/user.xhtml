@@ -8,7 +8,7 @@
    xmlns:ui="http://java.sun.com/jsf/facelets"
    xmlns:mk="http://mkremer.lu/facelets" >
     <h:head>
-        <title>#{vuser.user.firstName} #{vuser.user.lastName}</title>
+        <title>#{vuser.user.fullName}</title>
         <meta charset="utf-8"/>
     </h:head>
     <h:body>
@@ -44,7 +44,7 @@
 					</b:form>
 					
 					<h1>
-						<h:outputText value="#{vuser.user.firstName} #{vuser.user.lastName} (#{vuser.user.username})" />
+						<h:outputText value="#{vuser.user.fullName} (#{vuser.user.username})" />
 						<b:button value="Back" onclick="history.go(-1)" iconAwesome="fa-angle-left" style="margin-left:0.5em;" />
 						<b:button value="Disable account" onclick="$('.disableAccountModal').modal();" iconAwesome="fa-pause" rendered="#{canBeDisabled}" style="margin-left:0.5em;" />
 						<b:button value="Enable account" onclick="$('.enableAccountModal').modal();" iconAwesome="fa-play" rendered="#{canBeEnabled}" style="margin-left:0.5em;" />
