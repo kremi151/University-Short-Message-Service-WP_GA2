@@ -57,10 +57,7 @@
 							<b:panel id="panel1" title="Overview">
 								<b:panelGrid colSpans="4,8" size="xs">
 									<h:outputLabel value="Title:" />
-									<ui:fragment>
-										<h:outputLabel value="#{viewclass.className}" rendered="#{not edit}" />
-										<b:inputText value="#{viewclass.className}" rendered="#{edit}" />
-									</ui:fragment>
+									<mk:conditionalInputText editable="#{edit}" value="#{viewclass.className}" />
 									<h:outputLabel value="Programme:" />
 									<ui:fragment>
 										<h:outputLabel value="#{viewclass.classProgramme.name}" rendered="#{not edit}" />
