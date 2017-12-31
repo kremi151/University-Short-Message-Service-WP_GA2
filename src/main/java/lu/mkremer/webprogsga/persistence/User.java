@@ -40,7 +40,7 @@ public class User implements Serializable{
 	private boolean priviledged = false;
 	
 	@Column(nullable=false)
-	private boolean enabled = true;//TODO: Enable/Disable via UI
+	private boolean enabled = true;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(

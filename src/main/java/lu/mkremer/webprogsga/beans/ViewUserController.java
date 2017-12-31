@@ -15,10 +15,11 @@ import lu.mkremer.webprogsga.managers.MessageManager;
 import lu.mkremer.webprogsga.managers.UserManager;
 import lu.mkremer.webprogsga.persistence.Tweed;
 import lu.mkremer.webprogsga.persistence.User;
+import lu.mkremer.webprogsga.util.MessageHelper;
 
 @ManagedBean(name="vuser")
 @ViewScoped
-public class ViewUserController implements Serializable{//TODO: Check for unknown user
+public class ViewUserController implements Serializable{
 	
 	/**
 	 * 
@@ -41,10 +42,16 @@ public class ViewUserController implements Serializable{//TODO: Check for unknow
 			String uid = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
 			if(uid != null) {
 				user = um.findUser(uid);
-				messages.clear();
-				messages.addAll(mm.loadMessagesOf(user));
+				if(user != null) {
+					messages.clear();
+					messages.addAll(mm.loadMessagesOf(user));
+				}
 			}
 		}
+	}
+	
+	public boolean isExistent() {
+		return user != null;
 	}
 	
 	public void setSession(UserSession session) {
@@ -57,6 +64,24 @@ public class ViewUserController implements Serializable{//TODO: Check for unknow
 
 	public List<Tweed> getMessages() {
 		return messages;
+	}
+	
+	public void enableAccount() {
+		if(user != null && session.isElevated()) {
+			user.setEnabled(true);
+			um.update(user);
+		}else {
+			MessageHelper.throwDangerMessage("You are not allowed to do this");
+		}
+	}
+	
+	public void disableAccount() {
+		if(user != null && session.isElevated()) {
+			user.setEnabled(false);
+			um.update(user);//TODO: Kick?
+		}else {
+			MessageHelper.throwDangerMessage("You are not allowed to do this");
+		}
 	}
 
 }

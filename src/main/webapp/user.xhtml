@@ -17,28 +17,60 @@
 		</ui:insert> 
 		<b:container style="margin-top:70px">
 			<mk:restricted condition="#{usession.loggedIn}">
-				<h1>#{vuser.user.firstName} #{vuser.user.lastName} (#{vuser.user.username}) <b:button value="Back" onclick="history.go(-1)" iconAwesome="fa-angle-left" /></h1>
-				<b:messages />
-				<b:accordion expanded-panels="profile">
-					<b:panel id="profile" title="Profile">
-						<b:panelGrid colSpans="4,8" size="xs">
-							<h:outputLabel value="First name:" />
-							<h:outputLabel id="firstNameLabel" value="#{vuser.user.firstName}" />
-							<h:outputLabel value="Last name:" />
-							<h:outputLabel id="lastNameLabel" value="#{vuser.user.lastName}" />
-							<h:outputLabel value="Username:" />
-							<h:outputLabel id="usernameLabel" value="#{vuser.user.username}" />
-							<h:outputLabel value="E-mail address:" />
-							<h:outputLabel id="emailLabel" value="#{vuser.user.email}" />
-						</b:panelGrid>
-					</b:panel>
-					<b:panel title="Messages">
-						<ui:repeat var="msg" value="#{vuser.messages}">
-							<mk:tweed value="#{msg}" onreply="replyTweed('#{msg.name}');" outcome="thread.xhtml" param="id" />
-						</ui:repeat>
-						<b:alert severity="info" rendered="#{vuser.messages.size() == 0}">This user has not sent any message</b:alert>
-					</b:panel>
-				</b:accordion>
+				<mk:restricted condition="#{vuser.existent}" severity="warning" message="The requested user was not found">
+					<c:set var="canEnable" value="#{usession.elevated and vuser.user ne usession.user}" />
+					<c:set var="canBeEnabled" value="#{canEnable and not vuser.user.enabled}" />
+					<c:set var="canBeDisabled" value="#{canEnable and vuser.user.enabled}" />
+					
+					<b:form rendered="#{canBeEnabled}">
+						<b:modal class="enableAccountModal" title="Enable account">
+							<h:outputText value="Do you want to enable the user account for #{vuser.user.fullName} (#{vuser.user.username})?" />
+							<f:facet name="footer">
+								<b:button value="No" look="primary" dismiss="modal" />
+								<b:commandButton value="Yes" action="#{vuser.enableAccount}" />
+							</f:facet>
+						</b:modal>
+					</b:form>
+					
+					<b:form rendered="#{canBeDisabled}">
+						<b:modal class="disableAccountModal" title="Disable account">
+							<h:outputText value="You are going to disable the user account for #{vuser.user.fullName} (#{vuser.user.username}). The respective user will no longer be able to log in to this service." />
+							<h:outputText value="Do you want to continue?" />
+							<f:facet name="footer">
+								<b:button value="No" look="primary" dismiss="modal" />
+								<b:commandButton value="Yes" action="#{vuser.disableAccount}" />
+							</f:facet>
+						</b:modal>
+					</b:form>
+					
+					<h1>
+						<h:outputText value="#{vuser.user.firstName} #{vuser.user.lastName} (#{vuser.user.username})" />
+						<b:button value="Back" onclick="history.go(-1)" iconAwesome="fa-angle-left" style="margin-left:0.5em;" />
+						<b:button value="Disable account" onclick="$('.disableAccountModal').modal();" iconAwesome="fa-pause" rendered="#{canBeDisabled}" style="margin-left:0.5em;" />
+						<b:button value="Enable account" onclick="$('.enableAccountModal').modal();" iconAwesome="fa-play" rendered="#{canBeEnabled}" style="margin-left:0.5em;" />
+					</h1>
+					<b:messages />
+					<b:accordion expanded-panels="profile">
+						<b:panel id="profile" title="Profile">
+							<b:panelGrid colSpans="4,8" size="xs">
+								<h:outputLabel value="First name:" />
+								<h:outputLabel id="firstNameLabel" value="#{vuser.user.firstName}" />
+								<h:outputLabel value="Last name:" />
+								<h:outputLabel id="lastNameLabel" value="#{vuser.user.lastName}" />
+								<h:outputLabel value="Username:" />
+								<h:outputLabel id="usernameLabel" value="#{vuser.user.username}" />
+								<h:outputLabel value="E-mail address:" />
+								<h:outputLabel id="emailLabel" value="#{vuser.user.email}" />
+							</b:panelGrid>
+						</b:panel>
+						<b:panel title="Messages">
+							<ui:repeat var="msg" value="#{vuser.messages}">
+								<mk:tweed value="#{msg}" onreply="replyTweed('#{msg.name}');" outcome="thread.xhtml" param="id" />
+							</ui:repeat>
+							<b:alert severity="info" rendered="#{vuser.messages.size() == 0}">This user has not sent any message</b:alert>
+						</b:panel>
+					</b:accordion>
+				</mk:restricted>
 			</mk:restricted>
 		</b:container>
     </h:body>
