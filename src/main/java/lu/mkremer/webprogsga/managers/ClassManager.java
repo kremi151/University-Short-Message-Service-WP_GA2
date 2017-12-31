@@ -20,5 +20,6 @@ public interface ClassManager {
 	List<Programme> getAllProgrammes();
 	List<Class> getProgrammeClasses(Programme p);
 	List<Class> getAllClasses();
+	void update(Class clazz);
 	
 }

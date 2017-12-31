@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Programme {//TODO: Complete
+public class Programme {
 	
 	@Id
 	@GeneratedValue
@@ -61,6 +61,22 @@ public class Programme {//TODO: Complete
 
 	public List<Class> getClasses() {
 		return classes;
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if(other == this) {
+			return true;
+		}else if(other == null || other.getClass() != Programme.class) {
+			return false;
+		}else {
+			return ((Programme)other).id == this.id;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return (int)id;
 	}
 	
 }

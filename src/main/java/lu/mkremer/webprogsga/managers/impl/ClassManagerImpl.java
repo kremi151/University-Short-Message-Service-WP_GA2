@@ -97,4 +97,9 @@ public class ClassManagerImpl implements ClassManager{
 		}
 	}
 
+	@Override
+	public void update(Class clazz) {
+		em.merge(clazz);
+	}
+
 }

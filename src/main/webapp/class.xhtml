@@ -17,7 +17,7 @@
 		</ui:insert> 
 		<b:container style="margin-top:70px">
 			<mk:restricted condition="#{usession.loggedIn}">
-				<mk:restricted condition="#{param['id'] != null}" message="The requested class has not been found" severity="warning">
+				<mk:restricted condition="#{viewclass.existent}" message="The requested class has not been found" severity="warning">
 					<script type="text/javascript">document.title = "#{viewclass.className}";</script>
 					
 					<b:form id="createChannelForm" rendered="#{usession.elevated}">
@@ -26,31 +26,76 @@
 							<b:inputText label="Name:" value="#{viewclass.channelName}" />
 							<f:facet name="footer">
 						        <b:button value="Cancel" dismiss="modal" />
-						        <b:commandButton value="Create" look="primary" action="#{viewclass.create}">
+						        <b:commandButton value="Create" look="primary" action="#{viewclass.createChannel}">
 						        	<f:param name="id" value="#{param['id']}" />
 						        </b:commandButton>
 						    </f:facet>
 						</b:modal>
 					</b:form>
 					
-					<h1>#{viewclass.className}</h1>
-					<b:messages />
-					<p>Programme: <strong>#{viewclass.programme.name}</strong></p>
-					<b:panel title="Channels" collapsible="false">
-						<b:dataTable value="#{viewclass.channels}" var="channel">
-							<b:dataTableColumn label="Name" value="#{channel.name}" />
-							<b:dataTableColumn label="Creator" value="#{channel.creator.fullName}" />
-							<b:dataTableColumn label="Creation" value="#{channel.creationDate}" />
-							<b:dataTableColumn label="" orderable="false">
-								<b:button value="View messages" icon-awesome="fa-envelope-o" outcome="index.xhtml">
-									<f:param name="channel" value="#{channel.id}" />
-								</b:button>
-							</b:dataTableColumn>
-						</b:dataTable>
-						<f:facet name="footer">
-					        <b:button value="Create channel" onclick="$('.createChannelModal').modal();" icon-awesome="fa-plus" />
-					    </f:facet>
-					</b:panel>
+					<c:set var="edit" value="#{usession.elevated and param['edit'] eq 'true'}" />
+					<c:set var="editable" value="#{usession.elevated and not param['edit'] eq 'true'}" />
+					
+					<b:form>
+						<h1>
+							<h:outputText value="#{viewclass.className}" />
+							<b:button value="Modify" icon-awesome="fa-pencil" outcome="class.xhtml" rendered="#{editable}" style="margin-left:0.5em;">
+								<f:param name="id" value="#{param['id']}" />
+								<f:param name="edit" value="true" />
+							</b:button>
+							<b:commandButton value="Save" icon-awesome="fa-floppy-o" action="#{viewclass.modifyClass()}" rendered="#{edit}" style="margin-left:0.5em;">
+								<f:param name="id" value="#{param['id']}" />
+								<f:param name="edit" value="true" />
+							</b:commandButton>
+							<b:button value="Cancel" icon-awesome="fa-close" outcome="class.xhtml" rendered="#{edit}" style="margin-left:0.5em;">
+								<f:param name="id" value="#{param['id']}" />
+								<f:param name="edit" value="false" />
+							</b:button>
+						</h1>
+						<b:messages />
+						<b:accordion expanded-panels="panel1">
+							<b:panel id="panel1" title="Overview">
+								<b:panelGrid colSpans="4,8" size="xs">
+									<h:outputLabel value="Title:" />
+									<ui:fragment>
+										<h:outputLabel value="#{viewclass.className}" rendered="#{not edit}" />
+										<b:inputText value="#{viewclass.className}" rendered="#{edit}" />
+									</ui:fragment>
+									<h:outputLabel value="Programme:" />
+									<ui:fragment>
+										<h:outputLabel value="#{viewclass.classProgramme.name}" rendered="#{not edit}" />
+										<b:selectOneMenu value="#{viewclass.classProgramme}" required="true" rendered="#{edit}">
+									      <f:selectItem itemLabel="(Please select)" itemValue="" />
+									      <f:selectItems value="#{viewclass.allProgrammes}" var="prog" itemLabel="#{prog.name}" itemValue="#{prog}" />
+									    </b:selectOneMenu>
+									</ui:fragment>
+								    <h:outputLabel value="Lecturer:" />
+								    <ui:fragment>
+								    	<h:outputLink value="user.xhtml" rendered="#{not edit}">
+								    	<h:outputText value="#{viewclass.classLecturer.fullName}" />
+									    	<f:param name="id" value="#{viewclass.classLecturer.username}" />
+									    </h:outputLink>
+									    <h:outputText value="###To be implemented###" rendered="#{edit}" />
+								    </ui:fragment>
+								</b:panelGrid>
+							</b:panel>
+							<b:panel id="panel2" title="Channels">
+								<b:dataTable value="#{viewclass.channels}" var="channel">
+									<b:dataTableColumn label="Name" value="#{channel.name}" />
+									<b:dataTableColumn label="Creator" value="#{channel.creator.fullName}" />
+									<b:dataTableColumn label="Creation" value="#{channel.creationDate}" />
+									<b:dataTableColumn label="" orderable="false">
+										<b:button value="View messages" icon-awesome="fa-envelope-o" outcome="index.xhtml">
+											<f:param name="channel" value="#{channel.id}" />
+										</b:button>
+									</b:dataTableColumn>
+								</b:dataTable>
+								<f:facet name="footer">
+							        <b:button value="Create channel" onclick="$('.createChannelModal').modal();" icon-awesome="fa-plus" />
+							    </f:facet>
+							</b:panel>
+						</b:accordion>
+					</b:form>
 				</mk:restricted>
 			</mk:restricted>
 		</b:container>

@@ -51,7 +51,7 @@ public class MessageManagerImpl implements MessageManager{
 	public List<Tweed> findAnswersFor(String id) {
 		if(!id.startsWith("#")) id = "#" + id;
 		return em.createQuery("select m from Tweed m where m.content like :name order by m.date asc", Tweed.class)
-				.setParameter("name", "%" + id + "%").getResultList();
+				.setParameter("name", "%" + id + "%").getResultList();//TODO: Make sure to look for subsequential a whitespace character or that the name stands at the end
 	}
 
 }
