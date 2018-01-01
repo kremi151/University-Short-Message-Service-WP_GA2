@@ -8,7 +8,7 @@
 
 	<mk:restricted condition="#{resultListener != null}" message="Invalid parameter">
 		<b:form id="userSelectForm">
-			<b:inputText value="#{selectuser.filter}" placeholder="Filter:" onchange="userSelectFormUserTableWidget.DataTable().destroy();" update="userTable" />
+			<b:inputText value="#{selectuser.filter}" placeholder="Filter:" onchange="userSelectFormUserTableWidget.DataTable().destroy();ajax:selectuser.onChange()" update="userTable" />
 			<b:dataTable value="#{selectuser.displayingUsers}" var="user" id="userTable" searching="false">
 				<b:dataTableColumn value="#{user.username}" label="Username" />
 				<b:dataTableColumn value="#{user.firstName}" label="First name" />

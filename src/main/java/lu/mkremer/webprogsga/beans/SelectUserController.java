@@ -32,7 +32,7 @@ public class SelectUserController implements Serializable{
 		this.filter = filter;
 	}
 	
-	public List<User> getDisplayingUsers(){
+	public List<User> getDisplayingUsers(){System.out.println("#### DISPLAY THE FUCK OUT OF THE USERS####");
 		if(filter == null || filter.length() == 0) {
 			return um.listAllUsers();
 		}else {
@@ -40,6 +40,9 @@ public class SelectUserController implements Serializable{
 		}
 	}
 	
-	//TODO: Make filter inputtext working when selecting users
+	public void onChange() {
+		System.out.println("### Current filter: " + filter);
+	}
+	//TODO: Fix this AJAX bug which is impossible to be fixed no matter how hard I try...
 	
 }
