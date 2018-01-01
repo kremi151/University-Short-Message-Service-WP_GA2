@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnitUtil;
 
 import lu.mkremer.webprogsga.managers.ChannelManager;
 import lu.mkremer.webprogsga.managers.UserManager;
@@ -26,13 +27,20 @@ public class ChannelManagerImpl implements ChannelManager{
 	public List<Channel> getAvailableChannels() {
 		return em.createQuery("select c from Channel c", Channel.class).getResultList();
 	}
+	
+	private boolean isLoaded(Object entity, String attribute) {
+		PersistenceUnitUtil unitUtil = em.getEntityManagerFactory().getPersistenceUnitUtil();
+		return unitUtil.isLoaded(entity, attribute);
+	}
 
 	@Override
 	public void subscribe(User user, Channel channel) {
-		List<Channel> subs = user.getSubscriptions();
-		if(subs == null) {
+		List<Channel> subs;
+		if(!isLoaded(user, "subscriptions")) {
 			subs = getChannelSubscriptions(user);
 			user.setSubscriptions(subs);
+		}else {
+			subs = user.getSubscriptions();
 		}
 		subs.add(channel);
 		em.merge(user);
@@ -40,10 +48,12 @@ public class ChannelManagerImpl implements ChannelManager{
 
 	@Override
 	public void unsubscribe(User user, Channel channel) {
-		List<Channel> subs = user.getSubscriptions();
-		if(subs == null) {
+		List<Channel> subs;
+		if(!isLoaded(user, "subscriptions")) {
 			subs = getChannelSubscriptions(user);
 			user.setSubscriptions(subs);
+		}else {
+			subs = user.getSubscriptions();
 		}
 		Iterator<Channel> it = subs.iterator();
 		while(it.hasNext()) {
@@ -55,8 +65,8 @@ public class ChannelManagerImpl implements ChannelManager{
 	}
 
 	@Override
-	public Channel createChannel(String name, User creator, Consumer<Channel> prePersistCallback) {
-		Channel channel = new Channel(name, creator);
+	public Channel createChannel(String name, String description, User creator, Consumer<Channel> prePersistCallback) {
+		Channel channel = new Channel(name, description, creator);
 		if(prePersistCallback != null) {
 			prePersistCallback.accept(channel);
 		}

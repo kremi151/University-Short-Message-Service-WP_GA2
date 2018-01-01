@@ -17,11 +17,24 @@
 		</ui:insert> 
 		<b:container style="margin-top:70px">
 			<ui:fragment rendered="#{usession.loggedIn}">
-				<h1><h:outputText value="Message feed" rendered="#{param['channel'] == null}" /><h:outputText value="#{msgfeed.channelName}" rendered="#{param['channel'] != null}" /></h1>
+				<h1>
+					<h:outputText value="Message feed" rendered="#{param['channel'] == null}" />
+					<h:outputText value="#{msgfeed.channelName}" rendered="#{param['channel'] != null}" />
+					<b:button value="Subscriptions" outcome="subscriptions.xhtml" icon-awesome="fa-rss" style="margin-left:0.5em;" />
+				</h1>
 				<ui:repeat var="msg" value="#{msgfeed.messages}">
 					<mk:tweed value="#{msg}" onreply="replyTweed('#{msg.name}');" outcome="thread.xhtml" param="id"/>
 				</ui:repeat>
-				<b:alert severity="info" rendered="#{msgfeed.messages.size() == 0}">No messages found. Make sure you have subscribed to at least one channel!</b:alert>
+				<c:if test="#{msgfeed.messages.size() == 0}">
+					<c:choose>
+						<c:when test="#{param['channel'] != null}">
+							<b:alert severity="info" rendered="#{msgfeed.messages.size() == 0}">No messages found for this channel. Be the first one to post one!</b:alert>
+						</c:when>
+						<c:otherwise>
+							<b:alert severity="info" rendered="#{msgfeed.messages.size() == 0}">No messages found. Make sure you have subscribed to at least one channel!</b:alert>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
 			</ui:fragment>
 			<ui:fragment rendered="#{not usession.loggedIn}">
 				<mk:login />

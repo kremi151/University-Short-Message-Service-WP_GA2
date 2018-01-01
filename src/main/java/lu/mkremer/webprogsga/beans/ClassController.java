@@ -41,6 +41,10 @@ public class ClassController implements Serializable{//TODO: Fix accordion expan
 	@Size(min=5, message="Channel name must have at least {min} characters")
 	private String channelName;
 	
+	@NotNull(message="No channel description provided")
+	@Size(min=10, message="Channel description must have at least {min} characters")
+	private String channelDescription;
+	
 	//Class values
 	
 	@NotNull(message="No class title provided")
@@ -124,6 +128,14 @@ public class ClassController implements Serializable{//TODO: Fix accordion expan
 		this.channelName = channelName;
 	}
 
+	public String getChannelDescription() {
+		return channelDescription;
+	}
+
+	public void setChannelDescription(String channelDescription) {
+		this.channelDescription = channelDescription;
+	}
+
 	public String getClassLecturerUsername() {
 		return classLecturerUsername;
 	}
@@ -138,7 +150,7 @@ public class ClassController implements Serializable{//TODO: Fix accordion expan
 
 	public void createChannel() {
 		if(cachedClass != null && session.isElevated()) {
-			cm.createChannel(channelName, session.getUser(), channel -> channel.getClasses().add(cachedClass));
+			cm.createChannel(channelName, channelDescription, session.getUser(), channel -> channel.getClasses().add(cachedClass));
 			reload();
 		}
 	}

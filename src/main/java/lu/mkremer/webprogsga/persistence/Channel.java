@@ -27,6 +27,9 @@ public class Channel{
 	@Column(nullable=false)
 	private String name;
 	
+	@Column(nullable=false)
+	private String description;
+	
 	@ManyToOne(optional=false)
 	private User creator;
 	
@@ -46,8 +49,9 @@ public class Channel{
 	
 	public Channel() {}
 	
-	public Channel(String name, User creator) {
+	public Channel(String name, String description, User creator) {
 		this.name = name;
+		this.description = description;
 		this.creator = creator;
 	}
 
@@ -57,6 +61,14 @@ public class Channel{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public User getCreator() {

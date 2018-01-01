@@ -40,6 +40,7 @@
 						<b:modal class="createChannelModal" title="Create new channel">
 							<p>The new channel will be linked to the class <strong>#{viewclass.className}</strong>. You can link other classes to this channel later on.</p>
 							<b:inputText label="Name:" value="#{viewclass.channelName}" />
+							<b:inputTextarea label="Description:" value="#{viewclass.channelDescription}" />
 							<f:facet name="footer">
 						        <b:button value="Cancel" dismiss="modal" />
 						        <b:commandButton value="Create" look="primary" action="#{viewclass.createChannel}">
@@ -103,6 +104,7 @@
 							<b:panel id="panel2" title="Channels">
 								<b:dataTable value="#{viewclass.channels}" var="channel">
 									<b:dataTableColumn label="Name" value="#{channel.name}" />
+									<b:dataTableColumn label="Description" value="#{channel.description}" />
 									<b:dataTableColumn label="Creator" value="#{channel.creator.fullName}" />
 									<b:dataTableColumn label="Creation" value="#{channel.creationDate}" />
 									<b:dataTableColumn label="" orderable="false">
