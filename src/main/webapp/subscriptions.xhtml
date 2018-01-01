@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html 
+   xmlns="http://www.w3.org/1999/xhtml" 
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:b="http://bootsfaces.net/ui"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:c="http://java.sun.com/jsp/jstl/core"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:mk="http://mkremer.lu/facelets" >
+    <h:head>
+        <title>Subscriptions</title>
+        <meta charset="utf-8"/>
+        <script type="text/javascript">
+        	function unsubscribe(channelId, channelName){
+        		document.getElementById("unsubscribeForm:channelId").value = channelId;
+        		$(".channelName").text(channelName);
+        		$(".unsubscribeModal").modal();
+        	}
+        </script>
+    </h:head>
+    <h:body>
+	    <ui:insert name="navbar" >
+			<ui:include src="navbar.xhtml" />
+		</ui:insert> 
+		<b:container style="margin-top:70px">
+			<mk:restricted condition="#{usession.loggedIn}">
+				<b:form id="unsubscribeForm">
+					<b:modal class="unsubscribeModal" title="Unsubscribe from channel">
+						<h:inputHidden id="channelId" value="#{subs.unsubscribeChannelId}"/>
+						<p>Do you really want to unsubscribe from the channel <strong class="channelName"></strong>? You message feed will no longer show messages related to this channel.</p>
+						<f:facet name="footer">
+							<b:button value="No" look="primary" dismiss="modal" />
+							<b:commandButton value="Yes" action="#{subs.unsubscribe}" />
+						</f:facet>
+					</b:modal>
+				</b:form>
+			
+				<h1>Subscriptions</h1>
+				<b:messages />
+				<b:dataTable value="#{subs.subscriptions}" var="sub">
+					<b:dataTableColumn value="#{sub.name}" label="Name" />
+					<b:dataTableColumn value="#{sub.description}" label="Description" />
+					<b:dataTableColumn label="" orderable="false">
+						<b:button value="Unsubscribe" onclick="unsubscribe(#{sub.id}, '#{sub.name}');" icon-awesome="fa-unlink" />
+					</b:dataTableColumn>
+				</b:dataTable>
+			</mk:restricted>
+		</b:container>
+    </h:body>
+</html>
