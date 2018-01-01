@@ -1,7 +1,7 @@
 package lu.mkremer.webprogsga.beans;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -51,8 +51,6 @@ public class ClassController implements Serializable{//TODO: Fix accordion expan
 	@NotNull(message="No lecturer provided")
 	private User classLecturer;//TODO: Make lecturer modifiable over UI
 	
-	private List<Channel> classChannels = new LinkedList<>();//TODO: Make class channels modifiable over UI
-	
 	private Class cachedClass = null;
 	
 	//
@@ -79,7 +77,6 @@ public class ClassController implements Serializable{//TODO: Fix accordion expan
 					if(clazz != null) {
 						className = clazz.getTitle();
 						classProgramme = clazz.getProgramme();
-						classChannels = clazz.getChannels();
 						classLecturer = clazz.getLecturer();
 						cachedClass = clazz;
 					}
@@ -111,7 +108,7 @@ public class ClassController implements Serializable{//TODO: Fix accordion expan
 	}
 
 	public List<Channel> getChannels(){
-		return classChannels;
+		return cachedClass != null ? cachedClass.getChannels() : Collections.emptyList();
 	}
 	
 	public String getChannelName() {
@@ -141,7 +138,6 @@ public class ClassController implements Serializable{//TODO: Fix accordion expan
 		if(cachedClass != null && session.isElevated()) {
 			cachedClass.setTitle(className);
 			cachedClass.setProgramme(classProgramme);
-			cachedClass.setChannels(classChannels);
 			cachedClass.setLecturer(classLecturer);
 			clm.update(cachedClass);
 			reload();
