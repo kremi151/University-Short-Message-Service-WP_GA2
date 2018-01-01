@@ -39,23 +39,34 @@
 	
 	<b:form id="newTweedForm" rendered="#{usession.loggedIn}">
 		<b:modal class="newTweedModal" title="New tweed">
-			<b:inputText id="tweedTitle" value="#{newtweed.title}" placeholder="Message title">
-				<f:facet name="prepend">
-					<h:outputText value="#" />
-				</f:facet>
-			</b:inputText>
-			<b:message for="@previous" />
-			<b:inputTextarea id="tweedContent" value="#{newtweed.message}" placeholder="Your message..." maxlength="200"/>
-			<b:message for="@previous" />
-			<b:selectOneMenu value="#{newtweed.channel}" required="true" label="Destination channel:">
-	            <f:selectItem itemLabel="(Please select)" itemValue="" />
-	            <f:selectItems value="#{newtweed.channels}" var="channel" itemValue="#{channel}" itemLabel="#{channel.name}" />
-	        </b:selectOneMenu>
-			<b:message for="@previous" />
-			<f:facet name="footer">
-		        <b:button value="Cancel" dismiss="modal" />
-		        <b:commandButton value="Post" look="primary" action="#{newtweed.post}" /><!--  ajax="true" update="@form"  For whatever reason in the world, I cannot get AJAX working... -->
-		    </f:facet>
+			<c:set var="subChannels" value="#{newtweed.channels}" />
+			<c:choose>
+				<c:when test="#{subChannels.size() > 0}">
+					<b:inputText id="tweedTitle" value="#{newtweed.title}" placeholder="Message title">
+						<f:facet name="prepend">
+							<h:outputText value="#" />
+						</f:facet>
+					</b:inputText>
+					<b:message for="@previous" />
+					<b:inputTextarea id="tweedContent" value="#{newtweed.message}" placeholder="Your message..." maxlength="200"/>
+					<b:message for="@previous" />
+					<b:selectOneMenu value="#{newtweed.channel}" required="true" label="Destination channel:">
+			            <f:selectItem itemLabel="(Please select)" itemValue="" />
+			            <f:selectItems value="#{subChannels}" var="channel" itemValue="#{channel}" itemLabel="#{channel.name}" />
+			        </b:selectOneMenu>
+					<b:message for="@previous" />
+					<f:facet name="footer">
+				        <b:button value="Cancel" dismiss="modal" />
+				        <b:commandButton value="Post" look="primary" action="#{newtweed.post}" /><!--  ajax="true" update="@form"  For whatever reason in the world, I cannot get AJAX working... -->
+				    </f:facet>
+				</c:when>
+				<c:otherwise>
+					<h:outputText value="You must be subscribed to at least one channel in order to post messages" />
+					<f:facet name="footer">
+				        <b:button value="Ok" dismiss="modal" />
+				    </f:facet>
+				</c:otherwise>
+			</c:choose>
 		</b:modal>
 		<script type="text/javascript">
 			function replyTweed(name){
