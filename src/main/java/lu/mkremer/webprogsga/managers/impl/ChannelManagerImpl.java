@@ -36,7 +36,7 @@ public class ChannelManagerImpl implements ChannelManager{
 	@Override
 	public void subscribe(User user, Channel channel) {
 		List<Channel> subs;
-		if(!isLoaded(user, "subscriptions")) {
+		if(user.getSubscriptions() == null || !isLoaded(user, "subscriptions")) {
 			subs = getChannelSubscriptions(user);
 			user.setSubscriptions(subs);
 		}else {
@@ -49,7 +49,7 @@ public class ChannelManagerImpl implements ChannelManager{
 	@Override
 	public void unsubscribe(User user, Channel channel) {
 		List<Channel> subs;
-		if(!isLoaded(user, "subscriptions")) {
+		if(user.getSubscriptions() == null || !isLoaded(user, "subscriptions")) {
 			subs = getChannelSubscriptions(user);
 			user.setSubscriptions(subs);
 		}else {
