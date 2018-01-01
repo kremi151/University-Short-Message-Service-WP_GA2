@@ -10,6 +10,13 @@
     <h:head>
         <title>Class</title>
         <meta charset="utf-8"/>
+        <script type="text/javascript">
+        	function userSelected(userId, display){
+        		$('.selectUserModal').modal('hide');
+        		$('.lecturerNameInput').val(display);
+        		document.getElementById("classForm:lecturer").value = userId;
+        	}
+        </script>
     </h:head>
     <h:body>
 	    <ui:insert name="navbar" >
@@ -19,6 +26,15 @@
 			<mk:restricted condition="#{usession.loggedIn}">
 				<mk:restricted condition="#{viewclass.existent}" message="The requested class has not been found" severity="warning">
 					<script type="text/javascript">document.title = "#{viewclass.className}";</script>
+					
+					<c:set var="edit" value="#{usession.elevated and param['edit'] eq 'true'}" />
+					<c:set var="editable" value="#{usession.elevated and not param['edit'] eq 'true'}" />
+					
+					<b:modal title="Select owner" class="selectUserModal" rendered="#{edit}">
+		    			<ui:include src="fragments/selectuser_fragment.xhtml">
+		    				<ui:param name="resultListener" value="userSelected" />
+		    			</ui:include>
+		    		</b:modal>
 					
 					<b:form id="createChannelForm" rendered="#{usession.elevated}">
 						<b:modal class="createChannelModal" title="Create new channel">
@@ -33,10 +49,7 @@
 						</b:modal>
 					</b:form>
 					
-					<c:set var="edit" value="#{usession.elevated and param['edit'] eq 'true'}" />
-					<c:set var="editable" value="#{usession.elevated and not param['edit'] eq 'true'}" />
-					
-					<b:form>
+					<b:form id="classForm">
 						<h1>
 							<h:outputText value="#{viewclass.className}" />
 							<b:button value="Modify" icon-awesome="fa-pencil" outcome="class.xhtml" rendered="#{editable}" style="margin-left:0.5em;">
@@ -68,11 +81,22 @@
 									</ui:fragment>
 								    <h:outputLabel value="Lecturer:" />
 								    <ui:fragment>
-								    	<h:outputLink value="user.xhtml" rendered="#{not edit}">
-								    	<h:outputText value="#{viewclass.classLecturer.fullName}" />
-									    	<f:param name="id" value="#{viewclass.classLecturer.username}" />
-									    </h:outputLink>
-									    <h:outputText value="###To be implemented###" rendered="#{edit}" />
+								    	<c:choose>
+								    		<c:when test="#{edit}">
+								    			<h:inputHidden id="lecturer" value="#{viewclass.classLecturerUsername}" />
+								    			<b:inputText readonly="true" class="lecturerNameInput" value="#{viewclass.classLecturerDisplayName}">
+								    				<f:facet name="append">
+								    					<b:button value="Select" onclick="$('.selectUserModal').modal();" />
+								    				</f:facet>
+								    			</b:inputText>
+								    		</c:when>
+								    		<c:otherwise>
+								    			<h:outputLink value="user.xhtml">
+										    		<h:outputText value="#{viewclass.classLecturerDisplayName}" />
+											    	<f:param name="id" value="#{viewclass.classLecturerUsername}" />
+											    </h:outputLink>
+								    		</c:otherwise>
+								    	</c:choose>
 								    </ui:fragment>
 								</b:panelGrid>
 							</b:panel>

@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 
 import lu.mkremer.webprogsga.managers.ChannelManager;
 import lu.mkremer.webprogsga.managers.ClassManager;
+import lu.mkremer.webprogsga.managers.UserManager;
 import lu.mkremer.webprogsga.persistence.Channel;
 import lu.mkremer.webprogsga.persistence.Class;
 import lu.mkremer.webprogsga.persistence.Programme;
@@ -32,6 +33,7 @@ public class ClassController implements Serializable{//TODO: Fix accordion expan
 	
 	@EJB private ClassManager clm;
 	@EJB private ChannelManager cm;
+	@EJB private UserManager um;
 	
 	//Channel creation
 	
@@ -48,8 +50,10 @@ public class ClassController implements Serializable{//TODO: Fix accordion expan
 	@NotNull(message="No programme provided")
 	private Programme classProgramme;
 	
-	@NotNull(message="No lecturer provided")
-	private User classLecturer;//TODO: Make lecturer modifiable over UI
+	@NotNull(message="No lecturer username provided")
+	private String classLecturerUsername;
+	
+	private String classLecturerDisplayName;
 	
 	private Class cachedClass = null;
 	
@@ -77,7 +81,8 @@ public class ClassController implements Serializable{//TODO: Fix accordion expan
 					if(clazz != null) {
 						className = clazz.getTitle();
 						classProgramme = clazz.getProgramme();
-						classLecturer = clazz.getLecturer();
+						classLecturerUsername = clazz.getLecturer().getUsername();
+						classLecturerDisplayName = clazz.getLecturer().getFullName();
 						cachedClass = clazz;
 					}
 				}catch(NumberFormatException e) {
@@ -119,12 +124,16 @@ public class ClassController implements Serializable{//TODO: Fix accordion expan
 		this.channelName = channelName;
 	}
 
-	public User getClassLecturer() {
-		return classLecturer;
+	public String getClassLecturerUsername() {
+		return classLecturerUsername;
 	}
 
-	public void setClassLecturer(User classLecturer) {
-		this.classLecturer = classLecturer;
+	public void setClassLecturerUsername(String classLecturerUsername) {
+		this.classLecturerUsername = classLecturerUsername;
+	}
+
+	public String getClassLecturerDisplayName() {
+		return classLecturerDisplayName;
 	}
 
 	public void createChannel() {
@@ -136,10 +145,15 @@ public class ClassController implements Serializable{//TODO: Fix accordion expan
 	
 	public void modifyClass() {
 		if(cachedClass != null && session.isElevated()) {
-			cachedClass.setTitle(className);
-			cachedClass.setProgramme(classProgramme);
-			cachedClass.setLecturer(classLecturer);
-			clm.update(cachedClass);
+			User nlecturer = um.findUser(classLecturerUsername);
+			if(nlecturer != null) {
+				cachedClass.setTitle(className);
+				cachedClass.setProgramme(classProgramme);
+				cachedClass.setLecturer(nlecturer);
+				clm.update(cachedClass);
+			}else {
+				MessageHelper.throwWarningMessage("The specified user has not been found");
+			}
 			reload();
 		}else {
 			MessageHelper.throwDangerMessage("You are not allowed to do this");
