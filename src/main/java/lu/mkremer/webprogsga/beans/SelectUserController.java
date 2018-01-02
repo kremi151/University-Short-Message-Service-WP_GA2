@@ -32,7 +32,7 @@ public class SelectUserController implements Serializable{
 		this.filter = filter;
 	}
 	
-	public List<User> getDisplayingUsers(){System.out.println("#### DISPLAY THE FUCK OUT OF THE USERS####");
+	public List<User> getDisplayingUsers(){
 		if(filter == null || filter.length() == 0) {
 			return um.listAllUsers();
 		}else {
