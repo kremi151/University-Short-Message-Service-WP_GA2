@@ -10,8 +10,33 @@
     <h:head>
         <title>Available channels</title>
         <meta charset="utf-8"/>
+        <script type="text/javascript">
+        	function showChannelInfo(name, description, creator, date){
+        		$(".channelName").text(name);
+        		$(".channelDescription").text(description);
+        		$(".channelCreator").text(creator);
+        		$(".channelCreationDate").text(date);
+        		$(".channelInfoModal").modal();
+        	}
+        </script>
     </h:head>
     <h:body>
+    	<b:modal class="channelInfoModal" title="Channel info">
+    		<b:panelGrid col-spans="4,8">
+    			<h:outputLabel value="Name:" />
+    			<h:outputLabel value="" class="channelName" />
+    			<h:outputLabel value="Description:" />
+    			<h:outputLabel value="" class="channelDescription" />
+    			<h:outputLabel value="Creator:" />
+    			<h:outputLabel value="" class="channelCreator" />
+    			<h:outputLabel value="Creation date:" />
+    			<h:outputLabel value="" class="channelCreationDate" />
+    		</b:panelGrid>
+    		<f:facet name="footer">
+    			<b:button value="Close" dismiss="modal" />
+    		</f:facet>
+    	</b:modal>
+    
 	    <ui:insert name="navbar" >
 			<ui:include src="navbar.xhtml" />
 		</ui:insert> 
@@ -27,7 +52,8 @@
 					<b:dataTableColumn value="#{channel.name}" label="Name" />
 					<b:dataTableColumn value="#{channel.description}" label="Description" />
 					<b:dataTableColumn label="" orderable="false">
-						<b:form>
+						<b:button value="Info" icon-awesome="fa-info-circle" onclick="showChannelInfo('#{channel.name}', '#{channel.description}', '#{channel.creator.fullName}', '#{channel.creationDate}');" />
+						<b:form style="display:inline;">
 							<b:commandButton value="Subscribe" icon-awesome="fa-plus" action="#{avchannels.subscribe(channel.id)}" />
 						</b:form>
 					</b:dataTableColumn>

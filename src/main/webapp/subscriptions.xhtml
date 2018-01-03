@@ -16,6 +16,13 @@
         		$(".channelName").text(channelName);
         		$(".unsubscribeModal").modal();
         	}
+        	function showChannelInfo(name, description, creator, date){
+        		$(".channelName").text(name);
+        		$(".channelDescription").text(description);
+        		$(".channelCreator").text(creator);
+        		$(".channelCreationDate").text(date);
+        		$(".channelInfoModal").modal();
+        	}
         </script>
     </h:head>
     <h:body>
@@ -34,6 +41,22 @@
 						</f:facet>
 					</b:modal>
 				</b:form>
+				
+		    	<b:modal class="channelInfoModal" title="Channel info">
+		    		<b:panelGrid col-spans="4,8">
+		    			<h:outputLabel value="Name:" />
+		    			<h:outputLabel value="" class="channelName" />
+		    			<h:outputLabel value="Description:" />
+		    			<h:outputLabel value="" class="channelDescription" />
+		    			<h:outputLabel value="Creator:" />
+		    			<h:outputLabel value="" class="channelCreator" />
+		    			<h:outputLabel value="Creation date:" />
+		    			<h:outputLabel value="" class="channelCreationDate" />
+		    		</b:panelGrid>
+		    		<f:facet name="footer">
+		    			<b:button value="Close" dismiss="modal" />
+		    		</f:facet>
+		    	</b:modal>
 			
 				<h1>
 					<h:outputText value="Subscriptions" />
@@ -45,6 +68,7 @@
 					<b:dataTableColumn value="#{sub.name}" label="Name" />
 					<b:dataTableColumn value="#{sub.description}" label="Description" />
 					<b:dataTableColumn label="" orderable="false">
+						<b:button value="Info" icon-awesome="fa-info-circle" onclick="showChannelInfo('#{sub.name}', '#{sub.description}', '#{sub.creator.fullName}', '#{sub.creationDate}');" />
 						<b:button value="Unsubscribe" onclick="unsubscribe(#{sub.id}, '#{sub.name}');" icon-awesome="fa-unlink" />
 					</b:dataTableColumn>
 				</b:dataTable>
