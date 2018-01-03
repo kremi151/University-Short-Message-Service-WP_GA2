@@ -59,10 +59,10 @@ public class StartupBean {//TODO: Run it with some default values before submiss
 
 			System.out.println("### Creating channels ###");
 			
-			Channel channel1 = cm.createChannel("Test channel #1", userAdmin, channel -> {
+			Channel channel1 = cm.createChannel("Test channel #1", "Test channel description", userAdmin, channel -> {
 				channel.getClasses().add(class1);
 			});//TODO: Test			
-			Channel channel2 = cm.createChannel("Test channel #2", userAdmin, channel -> {
+			Channel channel2 = cm.createChannel("Test channel #2", "Test channel description", userAdmin, channel -> {
 				channel.getClasses().add(class1);
 			});//TODO: Test
 
