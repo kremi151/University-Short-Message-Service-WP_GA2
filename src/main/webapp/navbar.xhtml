@@ -24,7 +24,8 @@
 			<b:navbarLinks pull="right" styleClass="hidden-xs"
 				rendered="#{usession.loggedIn}">
 				
-				<b:navLink value="New tweed" icon-awesome="fa-pencil" href="#" onclick="$('.newTweedModal').modal();" rendered="#{usession.loggedIn}"></b:navLink>
+				<b:navLink value="New tweed" icon-awesome="fa-pencil" href="#" onclick="$('.newTweedModal').modal();" ></b:navLink>
+				<b:navLink value="Create channel" icon-awesome="fa-rss-square" outcome="newchannel.xhtml" ></b:navLink>
 				<b:dropMenu value="#{usession.displayName}" iconAwesome="fa-user">
 					<b:navLink value="Profile" outcome="user.xhtml"
 						iconAwesome="fa-cogs">

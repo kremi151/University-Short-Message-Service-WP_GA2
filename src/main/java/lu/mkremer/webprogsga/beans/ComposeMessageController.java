@@ -7,7 +7,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -17,7 +17,7 @@ import lu.mkremer.webprogsga.managers.MessageManager;
 import lu.mkremer.webprogsga.persistence.Channel;
 
 @ManagedBean(name="newtweed")
-@ViewScoped
+@RequestScoped
 public class ComposeMessageController implements Serializable{
 
 	/**
