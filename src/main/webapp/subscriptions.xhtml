@@ -35,7 +35,11 @@
 					</b:modal>
 				</b:form>
 			
-				<h1>Subscriptions</h1>
+				<h1>
+					<h:outputText value="Subscriptions" />
+					<b:button value="Message feed" outcome="index.xhtml" icon-awesome="fa-rss" style="margin-left:0.5em;" />
+					<b:button value="Other channels" outcome="channels.xhtml" icon-awesome="fa-cubes" style="margin-left:0.5em;" />
+				</h1>
 				<b:messages />
 				<b:dataTable value="#{subs.subscriptions}" var="sub">
 					<b:dataTableColumn value="#{sub.name}" label="Name" />

@@ -20,7 +20,8 @@
 				<h1>
 					<h:outputText value="Message feed" rendered="#{param['channel'] == null}" />
 					<h:outputText value="#{msgfeed.channelName}" rendered="#{param['channel'] != null}" />
-					<b:button value="Subscriptions" outcome="subscriptions.xhtml" icon-awesome="fa-rss" style="margin-left:0.5em;" />
+					<b:button value="Subscriptions" outcome="subscriptions.xhtml" icon-awesome="fa-th-list" style="margin-left:0.5em;" />
+					<b:button value="Other channels" outcome="channels.xhtml" icon-awesome="fa-cubes" style="margin-left:0.5em;" />
 				</h1>
 				<ui:repeat var="msg" value="#{msgfeed.messages}">
 					<mk:tweed value="#{msg}" onreply="replyTweed('#{msg.name}');" outcome="thread.xhtml" param="id"/>

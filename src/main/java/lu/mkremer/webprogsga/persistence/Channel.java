@@ -95,4 +95,20 @@ public class Channel{
 		return classes;
 	}
 	
+	@Override
+	public boolean equals(Object other) {
+		if(other == this) {
+			return true;
+		}else if(other == null || other.getClass() != Channel.class) {
+			return false;
+		}else {
+			return ((Channel)other).id == this.id;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return (int)id;
+	}
+	
 }

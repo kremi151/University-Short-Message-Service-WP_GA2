@@ -81,6 +81,12 @@ public class ChannelManagerImpl implements ChannelManager{
 	}
 
 	@Override
+	public List<Channel> getInverseChannelSubscriptions(User user) {
+		return em.createQuery("select c from Channel c where c not in (select sub from User u join u.subscriptions sub where u.username = :id)", Channel.class)
+				.setParameter("id", user.getUsername()).getResultList();
+	}
+
+	@Override
 	public Channel findChannel(long id) {
 		return em.find(Channel.class, id);
 	}
