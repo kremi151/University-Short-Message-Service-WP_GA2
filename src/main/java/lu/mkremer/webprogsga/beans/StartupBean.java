@@ -1,5 +1,7 @@
 package lu.mkremer.webprogsga.beans;
 
+import java.util.Calendar;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -76,12 +78,19 @@ public class StartupBean {
 
 			System.out.println("### Creating messages ###");
 
-			mm.postMessage("#TestA", "This message is only viewable for channel 1 subscribers", userAdmin, channel1);
-			mm.postMessage("#TestB", "This message is only viewable for channel 2 subscribers", userAdmin, channel2);
-			mm.postMessage("#TestC", "This message is a response to #TestA written by @admin", userAdmin, channel1);
-			mm.postMessage("#TestD", "I want to greet @admin and @blocked", userUser, channel2);
-			mm.postMessage("#TestE", "I wonder if I am going to be blocked...", userBlocked, channel1);
-			mm.postMessage("#TestF", "I heard that the account of @blocked has been disabled, so he cannot log in anymore. Am I right?", userUser, channel2);
+			Calendar baseDate = Calendar.getInstance();
+			baseDate.add(Calendar.HOUR_OF_DAY, -1);
+			mm.postMessage("#TestA", "This message is only viewable for channel 1 subscribers", userAdmin, channel1, baseDate.getTime());
+			baseDate.add(Calendar.MINUTE, 10);
+			mm.postMessage("#TestB", "This message is only viewable for channel 2 subscribers", userAdmin, channel2, baseDate.getTime());
+			baseDate.add(Calendar.MINUTE, 8);
+			mm.postMessage("#TestC", "This message is a response to #TestA written by @admin", userAdmin, channel1, baseDate.getTime());
+			baseDate.add(Calendar.MINUTE, 12);
+			mm.postMessage("#TestD", "I want to greet @admin and @blocked", userUser, channel2, baseDate.getTime());
+			baseDate.add(Calendar.MINUTE, 14);
+			mm.postMessage("#TestE", "I wonder if I am going to be blocked...", userBlocked, channel1, baseDate.getTime());
+			baseDate.add(Calendar.MINUTE, 5);
+			mm.postMessage("#TestF", "I heard that the account of @blocked has been disabled, so he cannot log in anymore. Am I right?", userUser, channel2, baseDate.getTime());
 
 			System.out.println("### Done ###");
 		}
