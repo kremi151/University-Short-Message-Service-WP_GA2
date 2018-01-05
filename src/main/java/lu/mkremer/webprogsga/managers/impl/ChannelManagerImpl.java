@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import javax.ejb.EJB;
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnitUtil;
@@ -15,7 +15,7 @@ import lu.mkremer.webprogsga.managers.UserManager;
 import lu.mkremer.webprogsga.persistence.Channel;
 import lu.mkremer.webprogsga.persistence.User;
 
-@Singleton
+@Stateless
 public class ChannelManagerImpl implements ChannelManager{
 
 	@PersistenceContext

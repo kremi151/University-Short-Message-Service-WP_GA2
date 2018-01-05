@@ -78,7 +78,7 @@ public class ViewUserController implements Serializable{
 	public void disableAccount() {
 		if(user != null && session.isElevated()) {
 			user.setEnabled(false);
-			um.update(user);//TODO: Kick?
+			um.update(user);
 		}else {
 			MessageHelper.throwDangerMessage("You are not allowed to do this");
 		}

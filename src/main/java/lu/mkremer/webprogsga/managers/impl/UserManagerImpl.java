@@ -2,14 +2,14 @@ package lu.mkremer.webprogsga.managers.impl;
 
 import java.util.List;
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import lu.mkremer.webprogsga.managers.UserManager;
 import lu.mkremer.webprogsga.persistence.User;
 
-@Singleton
+@Stateless
 public class UserManagerImpl implements UserManager{
 
 	@PersistenceContext

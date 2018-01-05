@@ -2,7 +2,7 @@ package lu.mkremer.webprogsga.managers.impl;
 
 import java.util.List;
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -12,7 +12,7 @@ import lu.mkremer.webprogsga.persistence.Class;
 import lu.mkremer.webprogsga.persistence.Programme;
 import lu.mkremer.webprogsga.persistence.User;
 
-@Singleton
+@Stateless
 public class ClassManagerImpl implements ClassManager{
 	
 	@PersistenceContext

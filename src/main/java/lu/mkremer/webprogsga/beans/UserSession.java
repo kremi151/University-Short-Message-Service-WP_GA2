@@ -3,6 +3,8 @@ package lu.mkremer.webprogsga.beans;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -11,6 +13,7 @@ import javax.faces.context.FacesContext;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import lu.mkremer.webprogsga.managers.EventManager;
 import lu.mkremer.webprogsga.managers.UserManager;
 import lu.mkremer.webprogsga.persistence.User;
 import lu.mkremer.webprogsga.util.MessageHelper;
@@ -25,13 +28,36 @@ public class UserSession implements Serializable{
 	private static final long serialVersionUID = -6591517985681627665L;
 	
 	@EJB private UserManager um;
+	@EJB private EventManager eventManager;
+	
+	private long listenerId;
 	
 	private User user;
 	
 	private String username;
 	private String password;
+	
+	@PostConstruct
+	public void init() {
+		listenerId = eventManager.addAccountUpdatedListener(account -> {
+			synchronized(UserSession.this) {
+				if(user.getUsername().equals(account.getUsername())) {
+					if(!account.isEnabled()) {
+						user = null;
+					}else {
+						user = um.findUser(account.getUsername());
+					}
+				}
+			}
+		});
+	}
+	
+	@PreDestroy
+	public void preDestroy() {
+		eventManager.removeAccountUpdatedListener(listenerId);
+	}
 
-	public String login() {
+	public synchronized String login() {
 		User user = um.findUser(username);
 
 		if(user != null) {
@@ -54,7 +80,7 @@ public class UserSession implements Serializable{
 		return "login";
 	}
 	
-	public void logout() throws IOException {
+	public synchronized void logout() throws IOException {
 		System.out.println("Logging out " + getDisplayName());
 		user = null;
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
@@ -62,35 +88,35 @@ public class UserSession implements Serializable{
 	    ec.redirect(ec.getRequestContextPath() + "/index.xhtml");
 	}
 	
-	public User getUser() {
+	public synchronized User getUser() {
 		return user;
 	}
 	
-	public String getUsername() {
+	public synchronized String getUsername() {
 		return username;
 	}
 	
-	public String getPassword() {
+	public synchronized String getPassword() {
 		return password;
 	}
 	
-	public void setUsername(String username) {
+	public synchronized void setUsername(String username) {
 		this.username = username;
 	}
 	
-	public void setPassword(String password) {
+	public synchronized void setPassword(String password) {
 		this.password = password;
 	}
 	
-	public String getDisplayName() {
+	public synchronized String getDisplayName() {
 		return user != null ? user.getFirstName() + " " + user.getLastName() : "MissingNo.";
 	}
 	
-	public boolean isLoggedIn() {
+	public synchronized boolean isLoggedIn() {
 		return user != null;
 	}
 	
-	public boolean isElevated() {
+	public synchronized boolean isElevated() {
 		return user != null && user.isPriviledged();
 	}
 	
