@@ -69,7 +69,7 @@
 						</h1>
 						<b:messages />
 						<b:accordion expanded-panels="panel1">
-							<b:panel id="panel1" title="Overview">
+							<b:panel id="panel1" class="panelWhichWillNotAutoExpand" title="Overview">
 								<b:panelGrid colSpans="4,8" size="xs">
 									<h:outputLabel value="Title:" />
 									<c:choose>
@@ -126,6 +126,11 @@
 							    </f:facet>
 							</b:panel>
 						</b:accordion>
+						<script type="text/javascript">
+						$(function(){
+						    $('.panelWhichWillNotAutoExpand .panel-title-link').trigger('click');
+						});
+						</script>
 					</b:form>
 				</mk:restricted>
 			</mk:restricted>

@@ -24,7 +24,7 @@ import lu.mkremer.webprogsga.util.MessageHelper;
 
 @ManagedBean(name="viewclass")
 @ViewScoped
-public class ClassController implements Serializable{//TODO: Fix accordion expanding bug
+public class ClassController implements Serializable{
 
 	/**
 	 * 
