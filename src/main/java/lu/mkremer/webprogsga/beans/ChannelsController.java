@@ -48,5 +48,18 @@ public class ChannelsController implements Serializable{
 			MessageHelper.throwDangerMessage("You are not allowed to do this");
 		}
 	}
+	
+	public String generateClassList(Channel channel) {
+		if(channel.getClasses().size() > 0) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(channel.getClasses().get(0).getTitle());
+			for(int i = 1 ; i < channel.getClasses().size() ; i++) {
+				sb.append(", ");
+				sb.append(channel.getClasses().get(i).getTitle());
+			}
+			return sb.toString();
+		}
+		return "None. (Impossible)";
+	}
 
 }

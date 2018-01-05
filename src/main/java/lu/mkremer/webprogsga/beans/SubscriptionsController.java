@@ -74,5 +74,18 @@ public class SubscriptionsController implements Serializable{
 			MessageHelper.throwDangerMessage("An internal error occured");
 		}
 	}
+	
+	public String generateClassList(Channel channel) {
+		if(channel.getClasses().size() > 0) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(channel.getClasses().get(0).getTitle());
+			for(int i = 1 ; i < channel.getClasses().size() ; i++) {
+				sb.append(", ");
+				sb.append(channel.getClasses().get(i).getTitle());
+			}
+			return sb.toString();
+		}
+		return "None. (Impossible)";
+	}
 
 }

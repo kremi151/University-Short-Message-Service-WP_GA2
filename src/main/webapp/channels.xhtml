@@ -11,11 +11,12 @@
         <title>Available channels</title>
         <meta charset="utf-8"/>
         <script type="text/javascript">
-        	function showChannelInfo(name, description, creator, date){
+        	function showChannelInfo(name, description, creator, date, classlist){
         		$(".channelName").text(name);
         		$(".channelDescription").text(description);
         		$(".channelCreator").text(creator);
         		$(".channelCreationDate").text(date);
+        		$(".channelClassList").text(classlist);
         		$(".channelInfoModal").modal();
         	}
         </script>
@@ -31,6 +32,8 @@
     			<h:outputLabel value="" class="channelCreator" />
     			<h:outputLabel value="Creation date:" />
     			<h:outputLabel value="" class="channelCreationDate" />
+    			<h:outputLabel value="Classes:" />
+    			<h:outputLabel value="" class="channelClassList" />
     		</b:panelGrid>
     		<f:facet name="footer">
     			<b:button value="Close" dismiss="modal" />
@@ -52,7 +55,7 @@
 					<b:dataTableColumn value="#{channel.name}" label="Name" />
 					<b:dataTableColumn value="#{channel.description}" label="Description" />
 					<b:dataTableColumn label="" orderable="false">
-						<b:button value="Info" icon-awesome="fa-info-circle" onclick="showChannelInfo('#{channel.name}', '#{channel.description}', '#{channel.creator.fullName}', '#{channel.creationDate}');" />
+						<b:button value="Info" icon-awesome="fa-info-circle" onclick="showChannelInfo('#{channel.name}', '#{channel.description}', '#{channel.creator.fullName}', '#{channel.creationDate}', '#{avchannels.generateClassList(channel)}');" />
 						<b:form style="display:inline;">
 							<b:commandButton value="Subscribe" icon-awesome="fa-plus" action="#{avchannels.subscribe(channel.id)}" />
 						</b:form>
