@@ -18,7 +18,7 @@ import lu.mkremer.webprogsga.persistence.User;
 
 @Singleton
 @Startup
-public class StartupBean {//TODO: Run it with some default values before submission
+public class StartupBean {
 	
 	private final static boolean INIT_DEFAULT_VALUES = true;
 	
@@ -61,7 +61,11 @@ public class StartupBean {//TODO: Run it with some default values before submiss
 				channel.getClasses().add(class1);
 			});	
 			Channel channel2 = cm.createChannel("Test channel #2", "Test channel description", userAdmin, channel -> {
+				channel.getClasses().add(class2);
+			});
+			Channel channel3 = cm.createChannel("Test channel #3", "A channel where no one has subscribed yet", userUser, channel -> {
 				channel.getClasses().add(class1);
+				channel.getClasses().add(class3);
 			});
 
 			System.out.println("### Creating subscriptions ###");
@@ -74,7 +78,10 @@ public class StartupBean {//TODO: Run it with some default values before submiss
 
 			mm.postMessage("#TestA", "This message is only viewable for channel 1 subscribers", userAdmin, channel1);
 			mm.postMessage("#TestB", "This message is only viewable for channel 2 subscribers", userAdmin, channel2);
-			mm.postMessage("#TestC", "This message mentions the users @admin and @user, aswell as the message #TestA. Have a nice day.", userAdmin, channel2);
+			mm.postMessage("#TestC", "This message is a response to #TestA written by @admin", userAdmin, channel1);
+			mm.postMessage("#TestD", "I want to greet @admin and @blocked", userUser, channel2);
+			mm.postMessage("#TestE", "I wonder if I am going to be blocked...", userBlocked, channel1);
+			mm.postMessage("#TestF", "I heard that the account of @blocked has been disabled, so he cannot log in anymore. Am I right?", userUser, channel2);
 
 			System.out.println("### Done ###");
 		}

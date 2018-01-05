@@ -92,6 +92,7 @@ public class CreateChannelController implements Serializable{
 	public String create() {
 		if(session.isLoggedIn()) {
 			Channel c = cm.createChannel(name, description, session.getUser(), channel -> channel.getClasses().addAll(Arrays.asList(selectedClasses)));
+			cm.subscribe(session.getUser(), c);
 			name = null;
 			description = null;
 			return "index.xhtml?faces-redirect=true&channel=" + c.getId();

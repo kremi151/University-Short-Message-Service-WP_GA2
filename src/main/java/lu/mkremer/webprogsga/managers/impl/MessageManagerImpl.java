@@ -19,7 +19,7 @@ public class MessageManagerImpl implements MessageManager{
 
 	@Override
 	public List<Tweed> loadMessagesFor(User user) {
-		return em.createQuery("select msg from User u join u.subscriptions sub join sub.messages msg where u.username = :id order by msg.date desc", Tweed.class)
+		return em.createQuery("select m from User u join u.subscriptions sub join sub.messages m where u.username = :id order by m.date, m.name desc", Tweed.class)
 				.setParameter("id", user.getUsername()).getResultList();
 	}
 
@@ -32,13 +32,13 @@ public class MessageManagerImpl implements MessageManager{
 
 	@Override
 	public List<Tweed> loadMessagesOf(User user) {
-		return em.createQuery("select m from Tweed m where m.sender.username = :sender order by m.date desc", Tweed.class)
+		return em.createQuery("select m from Tweed m where m.sender.username = :sender order by m.date, m.name desc", Tweed.class)
 				.setParameter("sender", user.getUsername()).getResultList();
 	}
 
 	@Override
 	public List<Tweed> loadMessagesFrom(Channel channel) {
-		return em.createQuery("select m from Tweed m where m.channel.id = :id order by m.date desc", Tweed.class).setParameter("id", channel.getId()).getResultList();
+		return em.createQuery("select m from Tweed m where m.channel.id = :id order by m.date, m.name desc", Tweed.class).setParameter("id", channel.getId()).getResultList();
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class MessageManagerImpl implements MessageManager{
 	@Override
 	public List<Tweed> findAnswersFor(String id) {
 		if(!id.startsWith("#")) id = "#" + id;
-		return em.createQuery("select m from Tweed m where m.content like :name order by m.date asc", Tweed.class)
+		return em.createQuery("select m from Tweed m where m.content like :name order by m.date, m.name asc", Tweed.class)
 				.setParameter("name", "%" + id + "%").getResultList();
 	}
 
