@@ -39,10 +39,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<tag-name>login</tag-name>
-		<source>tags/lu/mkremer/webprogsga/login.xhtml</source>
-	</tag>
-	<tag>
 		<tag-name>restricted</tag-name>
 		<source>tags/lu/mkremer/webprogsga/restricted.xhtml</source>
 		<attribute>

@@ -16,7 +16,9 @@
 			<ui:include src="navbar.xhtml" />
 		</ui:insert> 
 		<b:container style="margin-top:70px">
-			<mk:login />
+			<ui:insert name="login" >
+				<ui:include src="/fragments/loginform.xhtml" />
+			</ui:insert>
         </b:container>
     </h:body>
 </html>

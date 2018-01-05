@@ -38,7 +38,9 @@
 				</c:if>
 			</ui:fragment>
 			<ui:fragment rendered="#{not usession.loggedIn}">
-				<mk:login />
+				<ui:insert name="login" >
+					<ui:include src="/fragments/loginform.xhtml" />
+				</ui:insert>
 			</ui:fragment>
 		</b:container>
     </h:body>
