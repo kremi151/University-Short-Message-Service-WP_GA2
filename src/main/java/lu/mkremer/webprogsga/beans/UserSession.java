@@ -82,10 +82,6 @@ public class UserSession implements Serializable{
 		this.password = password;
 	}
 	
-	public int getNotificationCount() {
-		return 0; //TODO: Adjust notification count?
-	}
-	
 	public String getDisplayName() {
 		return user != null ? user.getFirstName() + " " + user.getLastName() : "MissingNo.";
 	}

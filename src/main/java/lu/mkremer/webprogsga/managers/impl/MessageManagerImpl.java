@@ -31,7 +31,7 @@ public class MessageManagerImpl implements MessageManager{
 	}
 
 	@Override
-	public List<Tweed> loadMessagesOf(User user) {//TODO: Restrict messages to the channels the viewer (other user) has subscribed?
+	public List<Tweed> loadMessagesOf(User user) {
 		return em.createQuery("select m from Tweed m where m.sender.username = :sender order by m.date desc", Tweed.class)
 				.setParameter("sender", user.getUsername()).getResultList();
 	}
@@ -51,7 +51,7 @@ public class MessageManagerImpl implements MessageManager{
 	public List<Tweed> findAnswersFor(String id) {
 		if(!id.startsWith("#")) id = "#" + id;
 		return em.createQuery("select m from Tweed m where m.content like :name order by m.date asc", Tweed.class)
-				.setParameter("name", "%" + id + "%").getResultList();//TODO: Make sure to look for subsequential a whitespace character or that the name stands at the end
+				.setParameter("name", "%" + id + "%").getResultList();
 	}
 
 }

@@ -1,7 +1,5 @@
 package lu.mkremer.webprogsga.beans;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -61,16 +59,16 @@ public class StartupBean {//TODO: Run it with some default values before submiss
 			
 			Channel channel1 = cm.createChannel("Test channel #1", "Test channel description", userAdmin, channel -> {
 				channel.getClasses().add(class1);
-			});//TODO: Test			
+			});	
 			Channel channel2 = cm.createChannel("Test channel #2", "Test channel description", userAdmin, channel -> {
 				channel.getClasses().add(class1);
-			});//TODO: Test
+			});
 
 			System.out.println("### Creating subscriptions ###");
 
-			cm.subscribe(userUser, channel1);//TODO: Test
-			cm.subscribe(userAdmin, channel1);//TODO: Test
-			cm.subscribe(userAdmin, channel2);//TODO: Test
+			cm.subscribe(userUser, channel1);
+			cm.subscribe(userAdmin, channel1);
+			cm.subscribe(userAdmin, channel2);
 
 			System.out.println("### Creating messages ###");
 
@@ -78,16 +76,6 @@ public class StartupBean {//TODO: Run it with some default values before submiss
 			mm.postMessage("#TestB", "This message is only viewable for channel 2 subscribers", userAdmin, channel2);
 			mm.postMessage("#TestC", "This message mentions the users @admin and @user, aswell as the message #TestA. Have a nice day.", userAdmin, channel2);
 
-			System.out.println("### Executing tests ###");//TODO: Remove?
-			
-			List<Channel> subs = cm.getChannelSubscriptions(userUser);
-			System.out.println("# Channel subscriptions for 'user':");
-			for(Channel c : subs)System.out.println("* " + c.getName());
-			
-			subs = cm.getChannelSubscriptions(userAdmin);
-			System.out.println("# Channel subscriptions for 'admin':");
-			for(Channel c : subs)System.out.println("* " + c.getName());
-			
 			System.out.println("### Done ###");
 		}
 	}

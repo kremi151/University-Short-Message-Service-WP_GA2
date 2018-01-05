@@ -51,8 +51,8 @@ public class UserManagerImpl implements UserManager{
 
 	@Override
 	public List<User> listMatchingUsers(String filter) {
-		return em.createQuery("select u from User u where u.username like %:filter% or u.firstName like %:filter% or u.lastName like %:filter%", User.class)
-				.setParameter("filter", filter).getResultList();
+		return em.createQuery("select u from User u where u.username like :filter or u.firstName like :filter or u.lastName like :filter", User.class)
+				.setParameter("filter", "%"+filter+"%").getResultList();
 	}
 
 	@Override

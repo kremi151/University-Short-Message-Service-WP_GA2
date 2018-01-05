@@ -30,7 +30,8 @@
 					<c:set var="edit" value="#{usession.elevated and param['edit'] eq 'true'}" />
 					<c:set var="editable" value="#{usession.elevated and not param['edit'] eq 'true'}" />
 					
-					<b:modal title="Select owner" class="selectUserModal" rendered="#{edit}">
+					<!-- Modal cannot have rendered attribute as AJAX would then not work -->
+					<b:modal title="Select owner" class="selectUserModal">
 		    			<ui:include src="fragments/selectuser_fragment.xhtml">
 		    				<ui:param name="resultListener" value="userSelected" />
 		    			</ui:include>
@@ -71,7 +72,14 @@
 							<b:panel id="panel1" title="Overview">
 								<b:panelGrid colSpans="4,8" size="xs">
 									<h:outputLabel value="Title:" />
-									<mk:conditionalInputText editable="#{edit}" value="#{viewclass.className}" />
+									<c:choose>
+										<c:when test="#{edit}">
+											<b:inputText value="#{viewclass.className}" />
+										</c:when>
+										<c:otherwise>
+											<h:outputLabel value="#{viewclass.className}" />
+										</c:otherwise>
+									</c:choose>
 									<h:outputLabel value="Programme:" />
 									<ui:fragment>
 										<h:outputLabel value="#{viewclass.classProgramme.name}" rendered="#{not edit}" />

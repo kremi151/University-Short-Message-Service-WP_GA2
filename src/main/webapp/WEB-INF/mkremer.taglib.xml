@@ -61,17 +61,4 @@
 			<type>java.lang.String</type>
 		</attribute>
 	</tag>
-	<tag>
-		<tag-name>conditionalInputText</tag-name>
-		<source>tags/lu/mkremer/webprogsga/conditionalInputText.xhtml</source>
-		<attribute>
-			<name>editable</name>
-			<required>true</required>
-			<type>java.lang.Boolean</type>
-		</attribute>
-		<attribute>
-			<name>value</name>
-			<required>true</required>
-		</attribute>
-	</tag>
 </facelet-taglib>

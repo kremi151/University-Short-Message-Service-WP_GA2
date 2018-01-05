@@ -57,6 +57,4 @@ public class ThreadController implements Serializable{
 		return answers;
 	}
 	
-	//TODO: Don't show tweeds from channels to a user who has not subscribed this channel
-	
 }
